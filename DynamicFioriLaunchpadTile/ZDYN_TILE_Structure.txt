@@ -1,0 +1,16 @@
+Structure:		ZDYN_TILE
+Structure Description:	Dynamic Tile
+
+Component	Typing Method	Component Type	Data Type	Lenght	Decimals	Short Description
+ICON		Types		TEXT40		CHAR		40	0		Text, 40 Characters Long
+INFO		Types		TEXT40		CHAR		40	0		Text, 40 Characters Long
+INFOSTATE	Types		TEXT40		CHAR		40	0		Text, 40 Characters Long
+NUMBER		Types		TEXT40		CHAR		40	0		Text, 40 Characters Long
+NUMBERDIGITS	Types		TEXT40		CHAR		40	0		Text, 40 Characters Long
+NUMBERFACTOR	Types		TEXT40		CHAR		40	0		Text, 40 Characters Long
+NUMBERSTATE	Types		TEXT40		CHAR		40	0		Text, 40 Characters Long
+NUMBERUNIT	Types		TEXT40		CHAR		40	0		Text, 40 Characters Long
+STATEARROW	Types		TEXT40		CHAR		40	0		Text, 40 Characters Long
+SUBTITLE	Types		TEXT40		CHAR		40	0		Text, 40 Characters Long
+TARGETPARAMS	Types		TEXT40		CHAR		40	0		Text, 40 Characters Long
+TITLE		Types		TEXT40		CHAR		40	0		Text, 40 Characters Long

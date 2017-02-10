@@ -1,0 +1,20 @@
+@AbapCatalog.sqlViewName: 'zepm_pd_value'
+@AbapCatalog.compiler.CompareFilter: true
+@AccessControl.authorizationCheck: #CHECK
+@EndUserText.label: 'EPM Product Value'
+define view zsnwd_pd_value
+   with parameters
+    p_target_currency: abap.cuky( 5 ),
+    p_exchange_rate_date: abap.dats    
+as select from Zsnwd_Pd_Stock inner join Zsnwd_Pd( 
+   p_target_currency  :   $parameters.p_target_currency,  
+   p_exchange_rate_date : $parameters.p_exchange_rate_date ) 
+   on Zsnwd_Pd_Stock.product_id = Zsnwd_Pd.product_id {
+    Zsnwd_Pd.product_id,
+    Zsnwd_Pd.price,
+    Zsnwd_Pd_Stock.quantity,
+    cast( Zsnwd_Pd.price * Zsnwd_Pd_Stock.quantity as abap.dec( 17, 2 )) as value
+}
+
+
+

@@ -1,0 +1,14 @@
+@AbapCatalog.sqlViewName: 'ZEMP_PD_RATING'
+@AbapCatalog.compiler.CompareFilter: true
+@AccessControl.authorizationCheck: #CHECK
+@EndUserText.label: 'EPM Product Rating'
+define view Zsnwd_Pd_Rating as select from snwd_rev_head 
+inner join snwd_pd
+    on snwd_rev_head.entity_key = snwd_pd.node_key {
+    snwd_rev_head.average_rating,
+    snwd_pd.product_id
+}
+where snwd_rev_head.item_count > 0
+
+
+ 

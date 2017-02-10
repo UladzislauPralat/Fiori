@@ -1,0 +1,20 @@
+@AbapCatalog.sqlViewName: 'ZEPM_PD'
+@AbapCatalog.compiler.CompareFilter: true
+@AccessControl.authorizationCheck: #CHECK
+@EndUserText.label: 'EPM Product'
+define view Zsnwd_Pd 
+    with parameters
+    p_target_currency: abap.cuky( 5 ),
+    p_exchange_rate_date: abap.dats
+    as select from snwd_pd {
+    snwd_pd.product_id,
+    currency_conversion( 
+      amount             => snwd_pd.price,
+      source_currency    => snwd_pd.currency_code,
+      target_currency    => $parameters.p_target_currency,
+      exchange_rate_date => $parameters.p_exchange_rate_date,
+      exchange_rate_type => 'M',
+      error_handling     => 'SET_TO_NULL'              // otherwise data inconsistencies cause a dump     
+  ) as price 
+}
+

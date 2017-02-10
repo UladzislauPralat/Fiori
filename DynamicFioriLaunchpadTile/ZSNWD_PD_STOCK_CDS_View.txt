@@ -1,0 +1,13 @@
+@AbapCatalog.sqlViewName: 'zepm_pd_stock'
+@AbapCatalog.compiler.CompareFilter: true
+@AccessControl.authorizationCheck: #CHECK
+@EndUserText.label: 'EPM Product Strock'
+define view Zsnwd_Pd_Stock as select from snwd_stock inner join snwd_pd
+    on snwd_stock.product_guid = snwd_pd.node_key {
+    snwd_pd.product_id,
+    sum( snwd_stock.quantity ) as quantity
+} group by snwd_pd.product_id
+having sum( snwd_stock.quantity) > 0
+
+
+

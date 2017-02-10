@@ -1,0 +1,65 @@
+  METHOD dyn_tileset_get_entity.
+  DATA: w_numberFactor TYPE text40,
+        w_numberState  TYPE text40.
+  CONSTANTS: c_numberUnit TYPE text40 VALUE 'CAD'.
+
+    TRY.
+      CASE IT_KEY_TAB[ name = 'title' ]-VALUE.
+      WHEN 'EPM Products Value'.
+        SELECT sum( value )
+        FROM zsnwd_pd_value( p_target_currency    = @c_numberUnit,
+                             p_exchange_rate_date = @sy-datum )
+        INTO (@DATA(w_value)).
+*
+        IF w_value BETWEEN 100000000 AND 200000000.
+          w_numberState = 'Positive'.
+        ELSE.
+          w_numberState = 'Negative'.
+        ENDIF.
+*
+        IF w_value > 999999999.
+          w_numberFactor = 'B'.
+          w_value = w_value / 1000000000.
+        ELSEIF w_value > 999999.
+          w_value = w_value / 1000000.
+          w_numberFactor = 'M'.
+        ELSEIF w_value > 999.
+          w_value = w_value / 1000.
+          w_numberFactor = 'M'.
+        ENDIF.
+*
+        er_entity = VALUE #( icon         = 'sap-icon://product'
+                             number       = CONV string( CONV i( w_value ) )
+                             numberDigits = '1'
+                             numberFactor = w_numberFactor
+                             numberState  = w_numberState
+                             numberUnit   = c_numberUnit
+                             subtitle     = 'Value'
+                             title        = 'EPM Products'  ).
+      WHEN 'EPM Products Rating'.
+        SELECT count( * ), sum( average_rating )
+        FROM zsnwd_pd_rating
+        INTO (@DATA(w_count), @DATA(w_rating) ).
+        w_rating = w_rating / w_count.
+*
+        IF w_rating >= 4.
+          w_numberState = 'Positive'.
+        ELSEIF w_rating >= 3.
+          w_numberState = 'Negative'.
+        ELSEIF w_rating < 3.
+          w_numberState = 'Critical'.
+        ENDIF.
+*
+        er_entity = VALUE #( icon         = 'sap-icon://product'
+                             number       = CONV string( w_rating )
+                             numberDigits = '1'
+                             numberFactor = '*'
+                             numberState  = w_numberState
+                             numberUnit   = 'Star'
+                             subtitle     = 'Rating'
+                             title        = 'EPM Products'  ).
+      ENDCASE.
+    CATCH cx_sy_itab_line_not_found INTO DATA(itab_line_not_found).
+    ENDTRY.
+
+  ENDMETHOD.
