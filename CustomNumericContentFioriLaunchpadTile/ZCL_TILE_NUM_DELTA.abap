@@ -70,7 +70,7 @@ METHOD get_entity_flight_payment.
              numberFactor      = 'M'
              stateArrow        = 'Up'                    "None, Up or Down
              subtitle          = 'Dec 2017'
-             title             = 'Fast Jet Payments'
+             title             = 'Fastest Jet Payments'
              unit1             = '$'
              unit2             = '$'
              value1            = '152'

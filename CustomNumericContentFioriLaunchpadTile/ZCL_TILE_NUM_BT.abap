@@ -71,7 +71,7 @@ METHOD get_entity_flight_occ.
     numberState      = 'Error'                           "Positive or Error
     numberUnit       = '%'
     subtitle         = 'Dec 2017'
-    title            = 'Fast Jet Seats Occupancy'
+    title            = 'Fastest Jet Seats Occupancy'
     unit1            = '%'
     unit2            = '%'
     targetValue      = CONV ad_percnt3( '85' )
