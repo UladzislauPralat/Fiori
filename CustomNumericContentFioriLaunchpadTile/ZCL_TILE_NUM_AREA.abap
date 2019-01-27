@@ -25,9 +25,6 @@ public section.
 protected section.
 private section.
 
-  class-methods GET_ENTITY_TEST
-    returning
-      value(RS_ENTITY) type ZCL_ZTILE_NUM_AREA_MPC=>TS_ZTILE_NUM_AREA .
   class-methods GET_ENTITY_FLIGHT_OCC
     returning
       value(RS_ENTITY) type ZCL_ZTILE_NUM_AREA_MPC=>TS_ZTILE_NUM_AREA .
@@ -76,137 +73,7 @@ ENDMETHOD.
 * +-------------------------------------------------------------------------------------------------+
 * | [<-()] RS_ENTITY                      TYPE        ZCL_ZTILE_NUM_AREA_MPC=>TS_ZTILE_NUM_AREA
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-METHOD GET_ENTITY_FLIGHT_OCC.
-
-"  rs_entity = VALUE #(
-"    icon             = 'sap-icon://waiver'
-"    number           = '15.3'
-"    numberDigits     = '5'
-"    numberFactor     = ''
-"    numberState      = get_number_state_maximize( iv_value_1 = '15.3' iv_value_2 = '11.0' )
-"    numberUnit       = '%'
-"    subtitle         = 'Top 10 Customers, Apr 2016 - Dec 2016'
-"    title            = 'Customer P&L Marginal Profit'
-"    unit1            = '%'
-"    unit2            = '%'
-"    firstXLabel      = 'Apr 2016'
-"    lastXLabel       = 'Dec 2016'
-"    minXValue        = '0'
-"    maxXValue        = '100'
-"    minYValue        = '0'
-"    maxYValue        = '90'
-"    point1YValue     = '25'
-"    point2YValue     = '20'
-"    point3YValue     = '20'
-"    point4YValue     = '45'
-"    target1YValue    = '10'
-"    target2YValue    = '40'
-"    target3YValue    = '40'
-"    target4YValue    = '90'
-" ).
-  rs_entity = VALUE #(
-    icon             = 'sap-icon://waiver'
-    number           = '15.3'
-    numberDigits     = '5'
-    numberFactor     = ''
-    numberState      = get_number_state_maximize( iv_value_1 = '15.3' iv_value_2 = '11.0' )
-    numberUnit       = '%'
-    subtitle         = 'Top 10 Customers, Apr 2016 - Dec 2016'
-    title            = 'Customer P&L Marginal Profit'
-    unit1            = '%'
-    unit2            = '%'
-    firstXLabel      = 'Apr 2016'
-    lastXLabel       = 'Dec 2016'
-    minXValue        = '1'
-    maxXValue        = '8'
-    minYValue        = '0'
-    maxYValue        = '90'
-    point1YValue     = '25'
-    point2YValue     = '20'
-    point3YValue     = '20'
-    point4YValue     = '45'
-    point5YValue     = '25'
-    point6YValue     = '20'
-    point7YValue     = '20'
-    point8YValue     = '45'
-    point9YValue     = '25'
-    point10YValue     = '20'
-    point11YValue     = '20'
-    point12YValue     = '45'
-    point13YValue     = '25'
-    point14YValue     = '20'
-    point15YValue     = '20'
-    point16YValue     = '45'
-    point17YValue     = '25'
-    point18YValue     = '20'
-    point19YValue     = '20'
-    point20YValue     = '45'
-    point21YValue     = '25'
-    point22YValue     = '20'
-    point23YValue     = '20'
-    point24YValue     = '45'
-    point25YValue     = '25'
-    point26YValue     = '20'
-    point27YValue     = '20'
-    point28YValue     = '45'
-    point29YValue     = '25'
-    point30YValue     = '20'
-    point31YValue     = '20'
-    target1YValue    = '10'
-    target2YValue    = '40'
-    target3YValue    = '40'
-    target4YValue    = '90'
-    target5YValue    = '10'
-    target6YValue    = '40'
-    target7YValue    = '40'
-    target8YValue    = '90'
-    target9YValue    = '10'
-    target10YValue    = '40'
-    target11YValue    = '40'
-    target12YValue    = '90'
-    target13YValue    = '10'
-    target14YValue    = '40'
-    target15YValue    = '40'
-    target16YValue    = '90'
-    target17YValue    = '10'
-    target18YValue    = '40'
-    target19YValue    = '40'
-    target20YValue    = '90'
-    target21YValue    = '10'
-    target22YValue    = '40'
-    target23YValue    = '40'
-    target24YValue    = '90'
-    target25YValue    = '10'
-    target26YValue    = '40'
-    target27YValue    = '40'
-    target28YValue    = '90'
-    target29YValue    = '10'
-    target30YValue    = '40'
-    target31YValue    = '40'
- ).
-*
-   DATA(wt_components) = CAST cl_abap_structdescr( cl_abap_typedescr=>describe_by_data( rs_entity ) )->components.
-   LOOP AT wt_components ASSIGNING FIELD-SYMBOL(<s_components>) WHERE name CP 'POINT*XVALUE'.
-     FIND ALL OCCURRENCES OF REGEX '([0-9]{1,2})' IN <s_components>-name SUBMATCHES DATA(s1).
-     ASSIGN COMPONENT <s_components>-name OF STRUCTURE rs_entity TO FIELD-SYMBOL(<field>).
-     <field> = s1.
-   ENDLOOP.
-   wt_components = CAST cl_abap_structdescr( cl_abap_typedescr=>describe_by_data( rs_entity ) )->components.
-   LOOP AT wt_components ASSIGNING <s_components> WHERE name CP 'TARGET*XVALUE'.
-     FIND ALL OCCURRENCES OF REGEX '([0-9]{1,2})' IN <s_components>-name SUBMATCHES s1.
-     ASSIGN COMPONENT <s_components>-name OF STRUCTURE rs_entity TO <field>.
-     <field> = s1.
-   ENDLOOP.
-
-ENDMETHOD.
-
-
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Static Private Method ZCL_TILE_NUM_AREA=>GET_ENTITY_TEST
-* +-------------------------------------------------------------------------------------------------+
-* | [<-()] RS_ENTITY                      TYPE        ZCL_ZTILE_NUM_AREA_MPC=>TS_ZTILE_NUM_AREA
-* +--------------------------------------------------------------------------------------</SIGNATURE>
-METHOD get_entity_test.
+METHOD get_entity_flight_occ.
 DATA: w_pointyvalue  TYPE i,
       w_targetyvalue TYPE i.
 
