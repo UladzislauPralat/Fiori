@@ -77,32 +77,6 @@ METHOD get_entity_flight_occ.
 DATA: w_pointyvalue  TYPE i,
       w_targetyvalue TYPE i.
 
-"  rs_entity = VALUE #(
-"    icon             = 'sap-icon://waiver'
-"    number           = '15.3'
-"    numberDigits     = '5'
-"    numberFactor     = ''
-"    numberState      = get_number_state_maximize( iv_value_1 = '15.3' iv_value_2 = '11.0' )
-"    numberUnit       = '%'
-"    subtitle         = 'Top 10 Customers, Apr 2016 - Dec 2016'
-"    title            = 'Customer P&L Marginal Profit'
-"    unit1            = '%'
-"    unit2            = '%'
-"    firstXLabel      = 'Apr 2016'
-"    lastXLabel       = 'Dec 2016'
-"    minXValue        = '0'
-"    maxXValue        = '100'
-"    minYValue        = '0'
-"    maxYValue        = '90'
-"    point1YValue     = '25'
-"    point2YValue     = '20'
-"    point3YValue     = '20'
-"    point4YValue     = '45'
-"    target1YValue    = '10'
-"    target2YValue    = '40'
-"    target3YValue    = '40'
-"    target4YValue    = '90'
-" ).
   rs_entity = VALUE #(
     icon             = 'sap-icon://waiver'
     number           = '78.8'
