@@ -74,8 +74,8 @@ ENDMETHOD.
 * | [<-()] RS_ENTITY                      TYPE        ZCL_ZTILE_NUM_AREA_MPC=>TS_ZTILE_NUM_AREA
 * +--------------------------------------------------------------------------------------</SIGNATURE>
 METHOD get_entity_flight_occ.
-DATA: w_pointyvalue  TYPE i,
-      w_targetyvalue TYPE i.
+DATA: w_pointyvalue  TYPE f,
+      w_targetyvalue TYPE f.
 
   rs_entity = VALUE #(
     icon             = 'sap-icon://waiver'
