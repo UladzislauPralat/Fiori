@@ -1,0 +1,13 @@
+Description=A4H description
+Type=HTTP
+TrustAll=true
+Authentication=BasicAuthentication
+Name=A4H
+ProxyType=Internet
+URL=https\://dev.ides.com\:443
+WebIDEUsage=odata_abap,ui5_execute_abap,dev_abap
+WebIDESystem=A4H
+WebIDEEnabled=true
+sap-client=210 
+User=Uladz
+Password=abc123
