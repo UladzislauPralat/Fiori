@@ -27,19 +27,23 @@ METHOD define.
   DATA(lo_entity_type) = model->get_entity_type( 'Item' ).
   lo_entity_type->set_semantic( /iwbep/if_ana_odata_types=>gcs_ana_odata_semantic_value-query-aggregate ).
 *
-  lo_entity_type->get_property( 'ZZ_AMOUNT_TYPE' )->/iwbep/if_mgw_odata_annotatabl~create_annotation(
+  lo_entity_type->get_property( 'AmountType' )->/iwbep/if_mgw_odata_annotatabl~create_annotation(
     /iwbep/if_mgw_med_odata_types=>gc_sap_namespace )->add(
       iv_key = /iwbep/if_ana_odata_types=>gcs_ana_odata_annotation_key-aggregation_role
       iv_value = /iwbep/if_ana_odata_types=>gcs_ana_odata_annotation_value-dimension-dimension ).
-   lo_entity_type->get_property( 'ZZ_AMOUNT_INVOICE' )->/iwbep/if_mgw_odata_annotatabl~create_annotation(
+  lo_entity_type->get_property( 'AgingGroup' )->/iwbep/if_mgw_odata_annotatabl~create_annotation(
+    /iwbep/if_mgw_med_odata_types=>gc_sap_namespace )->add(
+      iv_key = /iwbep/if_ana_odata_types=>gcs_ana_odata_annotation_key-aggregation_role
+      iv_value = /iwbep/if_ana_odata_types=>gcs_ana_odata_annotation_value-dimension-dimension ).
+   lo_entity_type->get_property( 'AmountInvoice' )->/iwbep/if_mgw_odata_annotatabl~create_annotation(
     /iwbep/if_mgw_med_odata_types=>gc_sap_namespace )->add(
       iv_key = /iwbep/if_ana_odata_types=>gcs_ana_odata_annotation_key-aggregation_role
       iv_value = /iwbep/if_ana_odata_types=>gcs_ana_odata_annotation_value-measure-measure ).
-   lo_entity_type->get_property( 'ZZ_AMOUNT_DEDUCTION' )->/iwbep/if_mgw_odata_annotatabl~create_annotation(
+   lo_entity_type->get_property( 'AmountDeduction' )->/iwbep/if_mgw_odata_annotatabl~create_annotation(
     /iwbep/if_mgw_med_odata_types=>gc_sap_namespace )->add(
       iv_key = /iwbep/if_ana_odata_types=>gcs_ana_odata_annotation_key-aggregation_role
       iv_value = /iwbep/if_ana_odata_types=>gcs_ana_odata_annotation_value-measure-measure ).
-   lo_entity_type->get_property( 'ZZ_AMOUNT_CREDIT' )->/iwbep/if_mgw_odata_annotatabl~create_annotation(
+   lo_entity_type->get_property( 'AmountCredit' )->/iwbep/if_mgw_odata_annotatabl~create_annotation(
     /iwbep/if_mgw_med_odata_types=>gc_sap_namespace )->add(
       iv_key = /iwbep/if_ana_odata_types=>gcs_ana_odata_annotation_key-aggregation_role
       iv_value = /iwbep/if_ana_odata_types=>gcs_ana_odata_annotation_value-measure-measure ).
