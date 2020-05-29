@@ -307,7 +307,6 @@ ENDMETHOD.
 * | [!CX!] /IWBEP/CX_MGW_TECH_EXCEPTION
 * +--------------------------------------------------------------------------------------</SIGNATURE>
 METHOD itemset_get_entityset.
-*DATA: ws_entityset TYPE cl_far_customer_line_i_mpc=>ts_item.
 FIELD-SYMBOLS: <s_entityset> TYPE cl_far_customer_line_i_mpc=>ts_item.
 CONSTANTS: c_top TYPE i VALUE 1000000.
 
