@@ -106,7 +106,7 @@ ENDMETHOD.
 * | [--->] IT_FIELD_NAME                  TYPE        STRING_TABLE
 * | [<-->] CS_REQUEST_DETAILS             TYPE        /IWBEP/IF_MGW_CORE_SRV_RUNTIME=>TY_S_MGW_REQUEST_CONTEXT
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-METHOD delete_filter_properties.
+METHOD delete_filter_properties. 
 
   DATA(wt_filter_expressions) = cs_request_details-technical_request-filter_expressions.
   LOOP AT it_field_name ASSIGNING FIELD-SYMBOL(<s_field_name>).
