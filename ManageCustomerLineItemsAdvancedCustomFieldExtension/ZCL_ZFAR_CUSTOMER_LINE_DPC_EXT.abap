@@ -106,37 +106,19 @@ ENDMETHOD.
 * | [--->] IT_FIELD_NAME                  TYPE        STRING_TABLE
 * | [<-->] CS_REQUEST_DETAILS             TYPE        /IWBEP/IF_MGW_CORE_SRV_RUNTIME=>TY_S_MGW_REQUEST_CONTEXT
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-METHOD delete_filter_properties. 
+METHOD delete_filter_properties.
 
-  DATA(wt_filter_expressions) = cs_request_details-technical_request-filter_expressions.
   LOOP AT it_field_name ASSIGNING FIELD-SYMBOL(<s_field_name>).
     DELETE cs_request_details-filter_select_options WHERE property = <s_field_name>.
     LOOP AT cs_request_details-technical_request-filter_expressions INTO DATA(wa_filter_expressions)
                                                                     WHERE l_operand = <s_field_name>.
-      DELETE cs_request_details-technical_request-filter_expressions WHERE rop_id = wa_filter_expressions-expression_id.
+      DELETE cs_request_details-technical_request-filter_expressions WHERE rop_id = wa_filter_expressions-expression_id
+                                                                       AND operator = 'or'.
     ENDLOOP.
     DELETE cs_request_details-technical_request-filter_expressions WHERE l_operand = <s_field_name>.
     DELETE cs_request_details-technical_request-filter_select_options WHERE property = to_upper( <s_field_name> ).
     DELETE cs_request_details-technical_request-filter_select_placeholders WHERE property = to_upper( <s_field_name> ).
   ENDLOOP.
-
-  DO LINES( wt_filter_expressions ) TIMES.
-     IF wt_filter_expressions[ LINES( wt_filter_expressions ) + 1 - sy-index ]-rop_type = 'B'.
-       DATA(w_expression_id) = wt_filter_expressions[ LINES( wt_filter_expressions ) + 1 - sy-index ]-expression_id.
-       IF LINE_EXISTS( wt_filter_expressions[ lop_type      = 'B'
-                                              expression_id = w_expression_id ] ).
-          DATA(w_rop_id) = wt_filter_expressions[ lop_type      = 'B'
-                                                  expression_id = w_expression_id ]-rop_id.
-          IF LINE_EXISTS( wt_filter_expressions[ expression_id = w_rop_id ] ).
-            DATA(w_loperand) = wt_filter_expressions[ expression_id = w_rop_id ]-l_operand.
-            IF LINE_EXISTS( it_field_name[ table_line = w_loperand ] ).
-              DELETE cs_request_details-technical_request-filter_expressions
-                WHERE expression_id = w_expression_id.
-            ENDIF.
-          ENDIF.
-       ENDIF.
-    ENDIF.
-  ENDDO.
 
 ENDMETHOD.
 
