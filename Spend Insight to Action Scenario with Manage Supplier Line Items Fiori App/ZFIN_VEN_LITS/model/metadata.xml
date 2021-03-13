@@ -1,0 +1,905 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2009-2020 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+	<edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='SFINODATA1')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+		<edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='SFINODATA1')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+		<edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+	</edmx:Reference>
+	<edmx:DataServices m:DataServiceVersion="2.0">
+		<Schema Namespace="FAP_VENDOR_LINE_ITEMS_SRV" sap:schema-version="3" xml:lang="en" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+			<EntityType Name="Supplier" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="SupplierId"/>
+				</Key>
+				<Property MaxLength="3" Name="Country" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Country" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="35" Name="SupplierName" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Supplier Name" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="10" Name="SupplierId" Nullable="false" Type="Edm.String" sap:creatable="false" sap:label="Supplier" sap:text="SupplierName" sap:updatable="false"/>
+				<Property MaxLength="10" Name="AddressNumber" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Address Number" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="80" Name="Address" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Address Long" sap:sortable="false" sap:updatable="false"/>
+			</EntityType>
+			<EntityType Name="UpdatableItem" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="CompanyCode"/>
+					<PropertyRef Name="AccountingDocument"/>
+					<PropertyRef Name="FiscalYear"/>
+					<PropertyRef Name="AccountingDocumentItem"/>
+				</Key>
+				<Property MaxLength="4" Name="CompanyCode" Nullable="false" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Company Code" sap:sortable="false" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="10" Name="AccountingDocument" Nullable="false" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Document Number" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="4" Name="FiscalYear" Nullable="false" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Fiscal Year" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="3" Name="AccountingDocumentItem" Nullable="false" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Line item" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="1" Name="DunningBlockingReasonCode" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Dunning Block" sap:sortable="false"/>
+				<Property MaxLength="1" Name="PaymentBlockingReasonCode" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Item Payment Block" sap:sortable="false"/>
+				<Property Name="DueCalculationBaseDate" Precision="0" Type="Edm.DateTime" sap:creatable="false" sap:filterable="false" sap:label="Baseline Date" sap:sortable="false"/>
+				<Property Name="CashDiscount1Days" Precision="3" Scale="0" Type="Edm.Decimal" sap:creatable="false" sap:filterable="false" sap:label="Days 1" sap:sortable="false"/>
+				<Property Name="CashDiscount1Percent" Precision="5" Scale="3" Type="Edm.Decimal" sap:creatable="false" sap:filterable="false" sap:label="Disc. Percent 1" sap:sortable="false"/>
+				<Property Name="CashDiscount2Days" Precision="3" Scale="0" Type="Edm.Decimal" sap:creatable="false" sap:filterable="false" sap:label="Days 2" sap:sortable="false"/>
+				<Property Name="CashDiscount2Percent" Precision="5" Scale="3" Type="Edm.Decimal" sap:creatable="false" sap:filterable="false" sap:label="Disc. Percent 2" sap:sortable="false"/>
+				<Property Name="NetPaymentDays" Precision="3" Scale="0" Type="Edm.Decimal" sap:creatable="false" sap:filterable="false" sap:label="Days Net" sap:sortable="false"/>
+				<Property MaxLength="1" Name="PaymentMethod" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Payment Method" sap:sortable="false"/>
+				<Property MaxLength="2" Name="DunningArea" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Dunning Area" sap:sortable="false"/>
+				<Property Name="LastDunningDate" Precision="0" Type="Edm.DateTime" sap:creatable="false" sap:filterable="false" sap:label="Last Dunned" sap:sortable="false"/>
+				<Property MaxLength="1" Name="DunningLevel" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Dunning Level" sap:sortable="false"/>
+				<Property MaxLength="1" Name="MaximumDunningLevel" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Dunning Key" sap:sortable="false"/>
+				<Property MaxLength="18" Name="AssignmentReference" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Assignment" sap:sortable="false"/>
+				<Property MaxLength="50" Name="DocumentItemText" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Text" sap:sortable="false"/>
+				<Property MaxLength="1" Name="FinancialAccountType" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Account Type" sap:sortable="false" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="1" Name="SpecialGeneralLedgerCode" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Special G/L ind" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="2" Name="PostingKey" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Posting Key" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="1" Name="AccountingDocumentCategory" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Doc.status" sap:sortable="false" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="2" Name="TaxCode" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Tax Code" sap:sortable="false" sap:updatable="false"/>
+				<Property Name="Note" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Note" sap:sortable="false"/>
+				<Property MaxLength="50" Name="Title" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Title" sap:sortable="false"/>
+				<Property MaxLength="1" Name="ItemSinglePayable" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Boolean Variable (X=True, -=False, Space=Unknown)" sap:sortable="false" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property ConcurrencyMode="Fixed" MaxLength="40" Name="ETag" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Hash Value" sap:sortable="false" sap:updatable="false"/>
+			</EntityType>
+			<EntityType Name="Item" sap:content-version="1" sap:semantics="aggregate" sap:service-schema-version="3" sap:service-version="1">
+				<Key>
+					<PropertyRef Name="GeneratedID"/>
+				</Key>
+				<Property MaxLength="12" Name="AccountCreatedByUser" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Supplier Created By" sap:updatable="false"/>
+				<Property Name="AccountCreationDate" Precision="0" Type="Edm.DateTime" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="Date" sap:label="Supplier Created on" sap:updatable="false"/>
+				<Property MaxLength="2" Name="AccountingClerk" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Accounting Clerk" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="10" Name="AccountingDocument" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Document Number" sap:updatable="false"/>
+				<Property MaxLength="1" Name="AccountingDocumentCategory" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Document Status" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property Name="AccountingDocumentCreationDate" Precision="0" Type="Edm.DateTime" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="Date" sap:label="Entered On" sap:updatable="false"/>
+				<Property MaxLength="12" Name="AccountingDocCreatedByUser" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:label="JE Created By" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="3" Name="AccountingDocumentItem" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Line Item" sap:updatable="false"/>
+				<Property MaxLength="4" Name="AccountingDocumentTextCategory" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:filterable="false" sap:label="Text ID" sap:sortable="false" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="2" Name="AccountingDocumentType" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Document Type" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="30" Name="AccountMemo" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:label="Account Memo" sap:updatable="false"/>
+				<Property MaxLength="5" Name="AdditionalCurrency1" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Local Currency 2" sap:semantics="currency-code" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="5" Name="AdditionalCurrency2" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Local Currency 3" sap:semantics="currency-code" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="10" Name="AlternativePayeeAccount" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Alternat.Payee" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="1" Name="AlternativePayerIsAllowed" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Payee in Doc." sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property Name="AmountInAdditionalCurrency1" Precision="24" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="Amt (Add Crcy 1)" sap:unit="AdditionalCurrency1" sap:updatable="false"/>
+				<Property Name="AmountInAdditionalCurrency2" Precision="24" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="Amt (Add Crcy 2)" sap:unit="AdditionalCurrency2" sap:updatable="false"/>
+				<Property Name="AmountInBalanceTransactionCurrency" Precision="24" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="G/L Update Amount" sap:unit="BalanceTransactionCurrency" sap:updatable="false"/>
+				<Property Name="AmountInCompanyCodeCurrency" Precision="24" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="Amount (CoCd Cur.)" sap:unit="CompanyCodeCurrency" sap:updatable="false"/>
+				<Property Name="AmountInPaymentCurrency" Precision="24" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="Pymt Currency Amnt" sap:unit="PaymentCurrency" sap:updatable="false"/>
+				<Property Name="AmountInTransactionCurrency" Precision="24" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="Amount in FC" sap:unit="TransactionCurrency" sap:updatable="false"/>
+				<Property MaxLength="13" Name="AssetContract" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Contract Number" sap:updatable="false"/>
+				<Property MaxLength="18" Name="AssignmentReference" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:label="Assignment" sap:updatable="false"/>
+				<Property MaxLength="4" Name="AuthorizationGroup" Nullable="false" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:filterable="false" sap:label="Authorization" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="5" Name="BalanceTransactionCurrency" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="G/L Currency" sap:semantics="currency-code" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="10" Name="BillingDocument" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="SD Document No." sap:updatable="false"/>
+				<Property MaxLength="1" Name="BillOfExchangeUsage" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="BoE Usage" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="5" Name="BooleanParameter" Nullable="false" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:filterable="false" sap:label="for internal use only" sap:sortable="false" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="4" Name="BPBankAccountInternalID" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:label="BP Bank Account" sap:updatable="false"/>
+				<Property MaxLength="10" Name="BranchAccount" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Branch Account No." sap:updatable="false"/>
+				<Property MaxLength="4" Name="BusinessArea" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Business Area" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="4" Name="BusinessPlace" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Business Place" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="1" Name="CashDateDueNetSymbol" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Cash Date 1 Due" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property Name="CashDiscount1ArrearsDays" Precision="5" Scale="0" Type="Edm.Decimal" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Disc.1 Arrears" sap:updatable="false"/>
+				<Property Name="CashDiscount1Days" Precision="3" Scale="0" Type="Edm.Decimal" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Cash Discount Days 1" sap:updatable="false"/>
+				<Property Name="CashDiscount1Percent" Precision="5" Scale="3" Type="Edm.Decimal" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Disc. Percent 1" sap:updatable="false"/>
+				<Property Name="CashDiscount2Days" Precision="3" Scale="0" Type="Edm.Decimal" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Cash Discount Days 2" sap:updatable="false"/>
+				<Property Name="CashDiscount2Percent" Precision="5" Scale="3" Type="Edm.Decimal" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Disc. Percent 2" sap:updatable="false"/>
+				<Property Name="CashDiscountAmount" Precision="24" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="Discount (Tran Cur.)" sap:unit="TransactionCurrency" sap:updatable="false"/>
+				<Property Name="CashDiscountAmountInTransactionCurrency" Precision="24" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="Discount Available" sap:unit="TransactionCurrency" sap:updatable="false"/>
+				<Property Name="CashDiscountAmtInCompanyCodeCrcy" Precision="24" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="Discount (CoCd Cur.)" sap:unit="CompanyCodeCurrency" sap:updatable="false"/>
+				<Property Name="CashDiscountBaseAmount" Precision="24" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="Cash Discount Base" sap:unit="TransactionCurrency" sap:updatable="false"/>
+				<Property Name="CashDisount1DueDate" Precision="0" Type="Edm.DateTime" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="Date" sap:label="Cash Disc 1 Due Date" sap:updatable="false"/>
+				<Property MaxLength="4" Name="CashFlowType" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Flow Type" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="40" Name="CityName" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:label="City" sap:updatable="false"/>
+				<Property MaxLength="10" Name="ClearingAccountingDocument" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Clearing Doc. No." sap:updatable="false"/>
+				<Property Name="ClearingDate" Precision="0" Type="Edm.DateTime" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="Date" sap:label="Clearing Date" sap:updatable="false"/>
+				<Property MaxLength="4" Name="ClearingDocFiscalYear" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Clrg Fiscal Yr" sap:updatable="false"/>
+				<Property MaxLength="1" Name="ClearingStatus" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Clearing Status" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="4" Name="CompanyCode" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Company Code" sap:text="CompanyName" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="5" Name="CompanyCodeCurrency" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Local Currency" sap:semantics="currency-code" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="25" Name="CompanyName" Type="Edm.String" sap:creatable="false" sap:label="Company Name" sap:updatable="false"/>
+				<Property MaxLength="10" Name="CorporateGroup" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Corporate Group" sap:updatable="false"/>
+				<Property MaxLength="10" Name="CostCenter" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Cost Center" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="4" Name="CreditControlArea" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Credit Control Area" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="10" Name="CustomerSupplierAccount" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:filterable="false" sap:label="Account Number" sap:updatable="false"/>
+				<Property MaxLength="2" Name="DataExchangeInstruction1" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:filterable="false" sap:label="Instruction 1" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="2" Name="DataExchangeInstruction2" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:filterable="false" sap:label="Instruction 2" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="2" Name="DataExchangeInstruction3" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:filterable="false" sap:label="Instruction 3" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="2" Name="DataExchangeInstruction4" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:filterable="false" sap:label="Instruction 4" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="1" Name="DebitCreditCode" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Debit/Credit" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="4" Name="DeliveryScheduleLine" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Schedule line" sap:updatable="false" sap:value-list="standard"/>
+				<Property Name="DocumentDate" Precision="0" Type="Edm.DateTime" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="Date" sap:label="Document Date" sap:updatable="false"/>
+				<Property MaxLength="50" Name="DocumentItemText" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:label="Item Text" sap:updatable="false"/>
+				<Property MaxLength="16" Name="DocumentReferenceID" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Reference" sap:updatable="false"/>
+				<Property Name="DueCalculationBaseDate" Precision="0" Type="Edm.DateTime" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="Date" sap:label="Baseline date" sap:updatable="false"/>
+				<Property MaxLength="1" Name="DueItemCategory" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:label="Due Item Category" sap:updatable="false"/>
+				<Property MaxLength="1" Name="DueNetSymbol" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Due Net (Symbol)" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="2" Name="DunningArea" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Dunning Area" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="1" Name="DunningBlockingReasonCode" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Dunning Block" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="1" Name="DunningLevel" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Dunning Level" sap:updatable="false"/>
+				<Property MaxLength="12" Name="EffectiveExchangeRate" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:filterable="false" sap:label="Effect. Exch. Rate" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="1" Name="FinancialAccountType" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Account Type" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="3" Name="FiscalPeriod" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Period" sap:updatable="false"/>
+				<Property MaxLength="4" Name="FiscalYear" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Fiscal Year" sap:updatable="false"/>
+				<Property MaxLength="7" Name="FiscalYearPeriod" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Year/Period" sap:updatable="false"/>
+				<Property MaxLength="4" Name="FixedAsset" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Fixed Asset" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="1" Name="FixedCashDiscount" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Fixed Payment Terms" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="1" Name="FollowOnDocumentType" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Follow-On Doc.Type" sap:updatable="false"/>
+				<Property MaxLength="16" Name="FundsManagementCenter" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Funds Center" sap:updatable="false"/>
+				<Property MaxLength="10" Name="GLAccount" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="G/L Account" sap:updatable="false" sap:value-list="standard"/>
+				<Property Name="GeneratedID" Nullable="false" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:filterable="false" sap:label="SADL ID" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="2" Name="HasClearingAccountingDocument" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Item Status" sap:updatable="false"/>
+				<Property MaxLength="1" Name="HasPaymentOrder" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Payment Sent" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="1" Name="HasText" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:filterable="false" sap:label="Text Exists" sap:sortable="false" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="10" Name="HeadOffice" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Head Office" sap:updatable="false" sap:value-list="standard"/>
+				<Property Name="HedgedAmount" Precision="24" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="Hedged Amount" sap:unit="TransactionCurrency" sap:updatable="false"/>
+				<Property MaxLength="5" Name="HouseBank" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="House Bank" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="4" Name="Industry" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Industry" sap:text="IndustryName" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="20" Name="IndustryName" Type="Edm.String" sap:creatable="false" sap:label="Industry Name" sap:updatable="false"/>
+				<Property MaxLength="2" Name="InterestCalculationCode" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Interest Indic." sap:updatable="false" sap:value-list="standard"/>
+				<Property Name="InterestCalculationDate" Precision="0" Type="Edm.DateTime" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="Date" sap:label="Int. Last Calculated" sap:updatable="false"/>
+				<Property Name="InterestToBePosted" Precision="16" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="Imputed Interest" sap:unit="CompanyCodeCurrency" sap:updatable="false"/>
+				<Property MaxLength="2" Name="IntrstCalcFrequencyInMonths" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Interest Calc. Freq." sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="8" Name="InvoiceList" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Coll. Inv. List No." sap:updatable="false"/>
+				<Property MaxLength="10" Name="InvoiceReference" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Invoice Reference" sap:updatable="false"/>
+				<Property MaxLength="2" Name="IsAccountsReceivablePledged" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="AR Pledging" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="1" Name="IsCashDiscount1Due" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Cash Disc 1 Due Ind" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="1" Name="IsCleared" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Item Cleared" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="1" Name="IsClearingReversed" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Reverse Clearing" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="1" Name="IsDisputed" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Disputed Item" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="1" Name="IsDocumentArchived" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Archived" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="1" Name="IsDueNet" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Due Net Indicator" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="1" Name="IsMarkedForDeletion" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:filterable="false" sap:label="Delete" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="1" Name="IsNegativePosting" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Negative Posting" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="1" Name="IsOneTimeAccount" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="One-Time Account" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="1" Name="IsPaytAdviceSentByEDI" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Pmt Adv. by EDI" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="1" Name="IsSalesRelated" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Sales-Related Item" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="1" Name="IsSinglePayment" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Individual Payment" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="1" Name="IsUsedInPaymentTransaction" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Pymt Tran." sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property Name="KeyDate" Precision="0" Type="Edm.DateTime" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="Date" sap:filter-restriction="single-value" sap:label="Open on Key Date" sap:sortable="false" sap:updatable="false"/>
+				<Property Name="LastDunningDate" Precision="0" Type="Edm.DateTime" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="Date" sap:label="Last Dunned" sap:updatable="false"/>
+				<Property MaxLength="12" Name="MasterFixedAsset" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Main Asset No." sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="1" Name="MaximumDunningLevel" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Dunning Key" sap:updatable="false" sap:value-list="standard"/>
+				<Property Name="NetDueArrearsDays" Precision="5" Scale="0" Type="Edm.Decimal" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Net Arrears" sap:updatable="false"/>
+				<Property Name="NetDueDate" Precision="0" Type="Edm.DateTime" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="Date" sap:label="Net Due Date" sap:updatable="false"/>
+				<Property Name="NetPaymentDays" Precision="3" Scale="0" Type="Edm.Decimal" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Days Net" sap:updatable="false"/>
+				<Property MaxLength="10" Name="OffsettingAccount" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:label="Offsetting Account" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="1" Name="OffsettingAccountType" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:label="Offst.Acct Type" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="12" Name="InternalOrder" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Order" sap:updatable="false"/>
+				<Property MaxLength="1" Name="PaymentBlockingReason" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Item Payment Block" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="3" Name="PaymentCardItem" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Payment Card Item" sap:updatable="false"/>
+				<Property MaxLength="10" Name="PaymentCardsSettlementRun" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Settlement" sap:updatable="false"/>
+				<Property MaxLength="5" Name="PaymentCurrency" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Autom. Pymt Currency" sap:semantics="currency-code" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="3" Name="PaymentDifferenceReason" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Reason Code" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="1" Name="PaymentMethod" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Payment Method" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="2" Name="PaymentMethodSupplement" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Pymnt Methd Supplemt" sap:updatable="false"/>
+				<Property MaxLength="30" Name="PaymentReference" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Payment Reference" sap:updatable="false"/>
+				<Property MaxLength="4" Name="PaymentTerms" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Payment Terms" sap:updatable="false"/>
+				<Property Name="PlannedAmountInTransactionCurrency" Precision="24" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="Planned Amount" sap:unit="TransactionCurrency" sap:updatable="false"/>
+				<Property MaxLength="4" Name="Plant" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Plant" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="10" Name="POBox" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="PO Box" sap:updatable="false"/>
+				<Property MaxLength="10" Name="POBoxPostalCode" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="PO Box Postal Code" sap:updatable="false"/>
+				<Property MaxLength="10" Name="PostalCode" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Postal Code" sap:updatable="false"/>
+				<Property Name="PostingDate" Precision="0" Type="Edm.DateTime" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="Date" sap:label="Posting Date" sap:updatable="false"/>
+				<Property MaxLength="2" Name="PostingKey" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Posting Key" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="10" Name="ProfitCenter" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Profit Center" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="10" Name="PurchasingDocument" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Purchasing Document" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="5" Name="PurchasingDocumentItem" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Purchasing Doc. Item" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="8" Name="RealEstateObject" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Real Estate Key" sap:updatable="false"/>
+				<Property MaxLength="10" Name="ReconciliationAccount" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Recon. Account" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="12" Name="Reference1IDByBusinessPartner" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Reference Key 1" sap:updatable="false"/>
+				<Property MaxLength="12" Name="Reference2IDByBusinessPartner" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Reference Key 2" sap:updatable="false"/>
+				<Property MaxLength="20" Name="Reference3IDByBusinessPartner" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Reference Key 3" sap:updatable="false"/>
+				<Property MaxLength="3" Name="Region" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Supplier Region" sap:text="RegionName" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="25" Name="RegionName" Type="Edm.String" sap:creatable="false" sap:label="Supplier Region Name" sap:updatable="false"/>
+				<Property MaxLength="10" Name="SalesDocument" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Sales Document" sap:updatable="false"/>
+				<Property MaxLength="6" Name="SalesDocumentItem" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Item No." sap:updatable="false"/>
+				<Property Name="SettlementReferenceDate" Precision="0" Type="Edm.DateTime" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="Date" sap:label="Reference Date" sap:updatable="false"/>
+				<Property MaxLength="10" Name="SortKey" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Search Term" sap:updatable="false"/>
+				<Property MaxLength="1" Name="SpecialGeneralLedgerCode" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Special G/L ind" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="1" Name="SpecialGeneralLedgerTransactionType" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Sp. G/L Trans.Type" sap:updatable="false"/>
+				<Property MaxLength="2" Name="TargetTaxCode" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Target Tax Code" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="2" Name="TaxCode" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Tax Code" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="16" Name="TaxID1" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Tax Number 1" sap:updatable="false"/>
+				<Property MaxLength="11" Name="TaxID2" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Tax Number 2" sap:updatable="false"/>
+				<Property MaxLength="18" Name="TaxID3" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:label="Tax Number 3" sap:updatable="false"/>
+				<Property MaxLength="18" Name="TaxID4" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:label="Tax Number 4" sap:updatable="false"/>
+				<Property MaxLength="60" Name="TaxID5" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:label="Tax Number 5" sap:updatable="false"/>
+				<Property MaxLength="15" Name="TaxJurisdiction" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Tax Jur." sap:updatable="false" sap:value-list="standard"/>
+				<Property Name="TaxReportingDate" Precision="0" Type="Edm.DateTime" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="Date" sap:label="Tax Reporting Date" sap:updatable="false"/>
+				<Property MaxLength="4" Name="TaxSection" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Section Code" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="4" Name="ToleranceGroup" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Tolerance Group" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="6" Name="TradingPartnerCompanyID" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Company ID" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="5" Name="TransactionCurrency" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Currency" sap:semantics="currency-code" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="1" Name="TreasuryContractType" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Contract Type" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="40" Name="TuningParameter1" Nullable="false" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:filterable="false" sap:label="for internal use only" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="40" Name="TuningParameter2" Nullable="false" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:filterable="false" sap:label="for internal use only" sap:sortable="false" sap:updatable="false"/>
+				<Property Name="ValuatedAmountInAdditionalCurrency1" Precision="24" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="LC2 Evaluated Amount" sap:unit="AdditionalCurrency1" sap:updatable="false"/>
+				<Property Name="ValuatedAmountInAdditionalCurrency2" Precision="24" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="LC3 Evaluated Amount" sap:unit="AdditionalCurrency2" sap:updatable="false"/>
+				<Property Name="ValuatedAmountInCompanyCodeCurrency" Precision="24" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="LC Evaluated Amount" sap:unit="CompanyCodeCurrency" sap:updatable="false"/>
+				<Property Name="ValueDate" Precision="0" Type="Edm.DateTime" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="Date" sap:label="Value date" sap:updatable="false"/>
+				<Property MaxLength="20" Name="VATRegistration" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="VAT Registration No." sap:updatable="false"/>
+				<Property MaxLength="10" Name="Supplier" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Supplier" sap:text="SupplierName" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="4" Name="SupplierAccountName" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Supplier Acct Group" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="3" Name="SupplierCountry" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Country" sap:updatable="false" sap:value-list="standard"/>
+				<Property MaxLength="1" Name="SupplierIsBlockedForPosting" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Phys.Invent. Blocked" sap:updatable="false" sap:value-list="fixed-values"/>
+				<Property MaxLength="80" Name="SupplierName" Type="Edm.String" sap:creatable="false" sap:label="Supplier Name" sap:updatable="false"/>
+				<Property MaxLength="1" Name="SupplierPaymentBlockingReason" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="Suppl. Payment Block" sap:updatable="false" sap:value-list="standard"/>
+				<Property Name="WithholdingTaxAmount" Precision="24" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="Withholding Tax" sap:unit="TransactionCurrency" sap:updatable="false"/>
+				<Property Name="WithholdingTaxBaseAmount" Precision="24" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="Withholding Tax Base" sap:unit="TransactionCurrency" sap:updatable="false"/>
+				<Property Name="WithholdingTaxExemptionAmount" Precision="24" Scale="3" Type="Edm.Decimal" sap:aggregation-role="measure" sap:creatable="false" sap:display-format="UpperCase" sap:label="Withhold. Tax Exempt" sap:unit="TransactionCurrency" sap:updatable="false"/>
+				<Property MaxLength="24" Name="WBSElement" Type="Edm.String" sap:aggregation-role="dimension" sap:creatable="false" sap:display-format="UpperCase" sap:label="WBS Element" sap:updatable="false" sap:value-list="standard"/>
+				<Property ConcurrencyMode="Fixed" MaxLength="40" Name="ETag" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Hash Value" sap:sortable="false" sap:updatable="false"/>
+			</EntityType>
+			<EntityType Name="ReturnValue" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="rv"/>
+				</Key>
+				<Property MaxLength="1" Name="rv" Nullable="false" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Boolean Variable (X=True, -=False, Space=Unknown)" sap:sortable="false" sap:updatable="false" sap:value-list="fixed-values"/>
+			</EntityType>
+			<EntityType Name="DunningArea" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="CompanyCode"/>
+					<PropertyRef Name="Code"/>
+				</Key>
+				<Property MaxLength="4" Name="CompanyCode" Nullable="false" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Company Code" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="2" Name="Code" Nullable="false" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Dunning Area" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="50" Name="Name" Nullable="false" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Text" sap:sortable="false" sap:updatable="false"/>
+			</EntityType>
+			<EntityType Name="DunningBlockingReasonCode" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="Code"/>
+				</Key>
+				<Property MaxLength="1" Name="Code" Nullable="false" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Dunn. Block" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="50" Name="Name" Nullable="false" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Text" sap:sortable="false" sap:updatable="false"/>
+			</EntityType>
+			<EntityType Name="PaymentMethod" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="Country"/>
+					<PropertyRef Name="Code"/>
+				</Key>
+				<Property MaxLength="3" Name="Country" Nullable="false" Type="Edm.String" sap:creatable="false" sap:label="Country" sap:updatable="false"/>
+				<Property MaxLength="1" Name="Code" Nullable="false" Type="Edm.String" sap:creatable="false" sap:label="Pymt Method" sap:updatable="false"/>
+				<Property MaxLength="30" Name="Name" Nullable="false" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Description" sap:sortable="false" sap:updatable="false"/>
+			</EntityType>
+			<EntityType Name="DunningKey" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="Code"/>
+				</Key>
+				<Property MaxLength="1" Name="Code" Nullable="false" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Dunning Key" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="50" Name="Name" Nullable="false" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Text" sap:sortable="false" sap:updatable="false"/>
+			</EntityType>
+			<EntityType Name="Company" sap:content-version="1" sap:service-schema-version="1" sap:service-version="1">
+				<Key>
+					<PropertyRef Name="CompanyCode"/>
+				</Key>
+				<Property MaxLength="4" Name="CompanyCode" Nullable="false" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Company Code" sap:sortable="false" sap:text="CompanyName" sap:updatable="false"/>
+				<Property MaxLength="25" Name="CompanyName" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Company Name" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="25" Name="CompanyCity" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="City" sap:semantics="city" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="5" Name="CompanyCurrency" Type="Edm.String" sap:creatable="false" sap:label="Currency" sap:semantics="currency-code" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="3" Name="CompanyCountry" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Country" sap:sortable="false" sap:updatable="false"/>
+			</EntityType>
+			<EntityType Name="PaymentBlockingReasonCode" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="Code"/>
+				</Key>
+				<Property MaxLength="1" Name="Code" Nullable="false" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Payment block" sap:sortable="false" sap:updatable="false"/>
+				<Property MaxLength="20" Name="Name" Nullable="false" Type="Edm.String" sap:creatable="false" sap:filterable="false" sap:label="Description" sap:sortable="false" sap:updatable="false"/>
+			</EntityType>
+			<EntityContainer Name="FAP_VENDOR_LINE_ITEMS_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+				<EntitySet EntityType="FAP_VENDOR_LINE_ITEMS_SRV.Supplier" Name="Suppliers" sap:content-version="1" sap:creatable="false" sap:deletable="false" sap:pageable="false" sap:updatable="false"/>
+				<EntitySet EntityType="FAP_VENDOR_LINE_ITEMS_SRV.UpdatableItem" Name="UpdatableItems" sap:addressable="false" sap:content-version="1" sap:creatable="false" sap:deletable="false" sap:pageable="false"/>
+				<EntitySet EntityType="FAP_VENDOR_LINE_ITEMS_SRV.Item" Name="Items" sap:content-version="1" sap:creatable="false" sap:deletable="false" sap:label="Supplier Line Items" sap:pageable="false" sap:updatable="false"/>
+				<EntitySet EntityType="FAP_VENDOR_LINE_ITEMS_SRV.ReturnValue" Name="ReturnValueCollection" sap:content-version="1"/>
+				<EntitySet EntityType="FAP_VENDOR_LINE_ITEMS_SRV.DunningArea" Name="DunningAreas" sap:content-version="1" sap:creatable="false" sap:deletable="false" sap:pageable="false" sap:updatable="false"/>
+				<EntitySet EntityType="FAP_VENDOR_LINE_ITEMS_SRV.DunningBlockingReasonCode" Name="DunningBlockingReasonCodes" sap:content-version="1" sap:creatable="false" sap:deletable="false" sap:pageable="false" sap:updatable="false"/>
+				<EntitySet EntityType="FAP_VENDOR_LINE_ITEMS_SRV.PaymentMethod" Name="PaymentMethods" sap:content-version="1" sap:creatable="false" sap:deletable="false" sap:pageable="false" sap:updatable="false"/>
+				<EntitySet EntityType="FAP_VENDOR_LINE_ITEMS_SRV.DunningKey" Name="DunningKeys" sap:content-version="1" sap:creatable="false" sap:deletable="false" sap:pageable="false" sap:updatable="false"/>
+				<EntitySet EntityType="FAP_VENDOR_LINE_ITEMS_SRV.Company" Name="Companies" sap:content-version="1" sap:creatable="false" sap:deletable="false" sap:pageable="false" sap:updatable="false"/>
+				<EntitySet EntityType="FAP_VENDOR_LINE_ITEMS_SRV.PaymentBlockingReasonCode" Name="PaymentBlockingReasonCodes" sap:content-version="1" sap:creatable="false" sap:deletable="false" sap:pageable="false" sap:updatable="false"/>
+				<FunctionImport EntitySet="ReturnValueCollection" Name="CheckPaymentItems" ReturnType="FAP_VENDOR_LINE_ITEMS_SRV.ReturnValue" m:HttpMethod="GET" sap:action-for="FAP_VENDOR_LINE_ITEMS_SRV.ReturnValue">
+					<Parameter Mode="In" Name="keys" Type="Edm.String"/>
+				</FunctionImport>
+			</EntityContainer>
+			<Annotations Target="FAP_VENDOR_LINE_ITEMS_SRV.Item" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+				<Annotation Qualifier="uladzislau.pralat.fin.ap.lineitems.display.VendorGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
+					<Record>
+						<PropertyValue Property="Label" String="Supplier"/>
+						<PropertyValue Property="Data">
+							<Collection>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="SupplierCountry" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="Industry" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="Region" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="BusinessArea" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="CityName" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="SupplierName" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AccountCreatedByUser" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AccountCreationDate" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AccountMemo" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="BranchAccount" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="BusinessPlace" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="CorporateGroup" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="HeadOffice" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="IsMarkedForDeletion" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="IsOneTimeAccount" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="POBox" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="POBoxPostalCode" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="PostalCode" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="SortKey" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="TradingPartnerCompanyID" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="SupplierAccountName" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="SupplierIsBlockedForPosting" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="SupplierPaymentBlockingReason" Property="Value"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Qualifier="uladzislau.pralat.fin.ap.lineitems.display.AccountingDocumentGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
+					<Record>
+						<PropertyValue Property="Label" String="Journal Entry"/>
+						<PropertyValue Property="Data">
+							<Collection>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="FiscalYearPeriod" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="DocumentReferenceID" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="TransactionCurrency" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="FiscalYear" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="FiscalPeriod" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="PostingKey" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="DebitCreditCode" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="NetDueDate" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AmountInCompanyCodeCurrency" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="GLAccount" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AccountingDocumentType" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AccountingDocument" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="IsSalesRelated" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="ReconciliationAccount" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="SpecialGeneralLedgerCode" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AccountingDocumentCreationDate" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="CompanyName" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="DocumentDate" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AccountingClerk" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AccountingDocumentCategory" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AccountingDocumentItem" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AccountingDocumentTextCategory" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AdditionalCurrency1" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AdditionalCurrency2" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AmountInAdditionalCurrency1" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AmountInAdditionalCurrency2" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AmountInBalanceTransactionCurrency" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AmountInTransactionCurrency" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="BalanceTransactionCurrency" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="CashFlowType" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="CompanyCodeCurrency" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="CostCenter" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="DocumentItemText" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="EffectiveExchangeRate" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="FinancialAccountType" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="FundsManagementCenter" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="HasText" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="IsDocumentArchived" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="IsDueNet" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="IsNegativePosting" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="NetDueArrearsDays" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="PlannedAmountInTransactionCurrency" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="ProfitCenter" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="Reference1IDByBusinessPartner" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="Reference2IDByBusinessPartner" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="Reference3IDByBusinessPartner" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="SpecialGeneralLedgerTransactionType" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="ValuatedAmountInAdditionalCurrency1" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="ValuatedAmountInAdditionalCurrency2" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="ValuatedAmountInCompanyCodeCurrency" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="ValueDate" Property="Value"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Qualifier="uladzislau.pralat.fin.ap.lineitems.display.ClearingGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
+					<Record>
+						<PropertyValue Property="Label" String="Clearing"/>
+						<PropertyValue Property="Data">
+							<Collection>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="ClearingAccountingDocument" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="ClearingDocFiscalYear" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="HasClearingAccountingDocument" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="IsClearingReversed" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="ToleranceGroup" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="ClearingStatus" Property="Value"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Qualifier="uladzislau.pralat.fin.ap.lineitems.display.DiscountGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
+					<Record>
+						<PropertyValue Property="Label" String="Discount"/>
+						<PropertyValue Property="Data">
+							<Collection>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="CashDateDueNetSymbol" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="CashDiscount1ArrearsDays" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="CashDiscount1Days" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="CashDiscount1Percent" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="CashDiscount2Days" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="CashDiscount2Percent" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="CashDiscountAmount" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="CashDiscountAmountInTransactionCurrency" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="CashDiscountAmtInCompanyCodeCrcy" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="CashDiscountBaseAmount" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="DueCalculationBaseDate" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="DueNetSymbol" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="FixedCashDiscount" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="IsCashDiscount1Due" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="NetPaymentDays" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="CashDisount1DueDate" Property="Value"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Qualifier="uladzislau.pralat.fin.ap.lineitems.display.DunningGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
+					<Record>
+						<PropertyValue Property="Label" String="Dunning"/>
+						<PropertyValue Property="Data">
+							<Collection>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="DunningArea" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="DunningBlockingReasonCode" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="DunningLevel" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="LastDunningDate" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="MaximumDunningLevel" Property="Value"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Qualifier="uladzislau.pralat.fin.ap.lineitems.display.PaymentGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
+					<Record>
+						<PropertyValue Property="Label" String="Payment"/>
+						<PropertyValue Property="Data">
+							<Collection>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AlternativePayeeAccount" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AlternativePayerIsAllowed" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AmountInPaymentCurrency" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="BillOfExchangeUsage" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="CreditControlArea" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="DataExchangeInstruction1" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="DataExchangeInstruction2" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="DataExchangeInstruction3" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="DataExchangeInstruction4" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="HasPaymentOrder" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="HedgedAmount" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="HouseBank" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="InterestCalculationCode" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="InterestCalculationDate" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="InterestToBePosted" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="IntrstCalcFrequencyInMonths" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="IsAccountsReceivablePledged" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="IsDisputed" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="IsPaytAdviceSentByEDI" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="IsSinglePayment" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="IsUsedInPaymentTransaction" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="PaymentBlockingReason" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="PaymentCardItem" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="PaymentCardsSettlementRun" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="PaymentCurrency" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="PaymentDifferenceReason" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="PaymentMethod" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="PaymentMethodSupplement" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="PaymentReference" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="PaymentTerms" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="SettlementReferenceDate" Property="Value"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Qualifier="uladzislau.pralat.fin.ap.lineitems.display.RefObjectsGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
+					<Record>
+						<PropertyValue Property="Label" String="Referenced Objects"/>
+						<PropertyValue Property="Data">
+							<Collection>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AssignmentReference" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="AssetContract" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="BillingDocument" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="DeliveryScheduleLine" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="FixedAsset" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="FollowOnDocumentType" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="InvoiceList" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="InvoiceReference" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="MasterFixedAsset" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="InternalOrder" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="Plant" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="PurchasingDocument" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="PurchasingDocumentItem" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="RealEstateObject" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="SalesDocument" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="SalesDocumentItem" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="TreasuryContractType" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="WBSElement" Property="Value"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Qualifier="uladzislau.pralat.fin.ap.lineitems.display.TaxGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
+					<Record>
+						<PropertyValue Property="Label" String="Tax"/>
+						<PropertyValue Property="Data">
+							<Collection>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="VATRegistration" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="TargetTaxCode" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="TaxCode" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="TaxID1" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="TaxID2" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="TaxJurisdiction" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="TaxSection" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="WithholdingTaxAmount" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="WithholdingTaxBaseAmount" Property="Value"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Path="WithholdingTaxExemptionAmount" Property="Value"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="FAP_VENDOR_LINE_ITEMS_SRV.Item/AccountingDocument" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+				<Annotation String="AccountingDocument" Term="com.sap.vocabularies.Common.v1.SemanticObject"/>
+			</Annotations>
+			<Annotations Target="FAP_VENDOR_LINE_ITEMS_SRV.Item/CostCenter" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+				<Annotation String="CostCenter" Term="com.sap.vocabularies.Common.v1.SemanticObject"/>
+			</Annotations>
+			<Annotations Target="FAP_VENDOR_LINE_ITEMS_SRV.Item/Supplier" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+				<Annotation String="Supplier" Term="com.sap.vocabularies.Common.v1.SemanticObject"/>
+			</Annotations>
+			<Annotations Target="FAP_VENDOR_LINE_ITEMS_SRV.Item/FixedAsset" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+				<Annotation String="FixedAsset" Term="com.sap.vocabularies.Common.v1.SemanticObject"/>
+			</Annotations>
+			<Annotations Target="FAP_VENDOR_LINE_ITEMS_SRV.Item/GLAccount" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+				<Annotation String="GLAccount" Term="com.sap.vocabularies.Common.v1.SemanticObject"/>
+			</Annotations>
+			<Annotations Target="FAP_VENDOR_LINE_ITEMS_SRV.Item/HouseBank" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+				<Annotation String="HouseBank" Term="com.sap.vocabularies.Common.v1.SemanticObject"/>
+			</Annotations>
+			<Annotations Target="FAP_VENDOR_LINE_ITEMS_SRV.Item/InternalOrder" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+				<Annotation String="InternalOrder" Term="com.sap.vocabularies.Common.v1.SemanticObject"/>
+			</Annotations>
+			<Annotations Target="FAP_VENDOR_LINE_ITEMS_SRV.Item/ProfitCenter" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+				<Annotation String="ProfitCenter" Term="com.sap.vocabularies.Common.v1.SemanticObject"/>
+			</Annotations>
+			<atom:link href="http://localhost/DUMMY_SERVICE/$metadata" rel="self" xmlns:atom="http://www.w3.org/2005/Atom"/>
+			<atom:link href="http://localhost/DUMMY_SERVICE/$metadata" rel="latest-version" xmlns:atom="http://www.w3.org/2005/Atom"/>
+			<atom:link href="http://localhost/DUMMY_SERVICE/$metadata" rel="self" xmlns:atom="http://www.w3.org/2005/Atom"/>
+			<atom:link href="http://localhost/DUMMY_SERVICE/$metadata" rel="latest-version" xmlns:atom="http://www.w3.org/2005/Atom"/>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

@@ -1,0 +1,196 @@
+{
+	"_version": "1.6.0",
+
+	"sap.app": {
+		"_version": "1.2.0",
+		"id": "uladzislau.pralat.fin.ap.lineitems.display",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "7.0.8"
+		},
+		"title": "{{FULLSCREEN_TITLE}}",
+		"ach": "FI-FIO-AP",
+		"crossNavigation": {
+			"inbounds": {
+				"Supplier-manageLineItems": {
+					"semanticObject": "Supplier",
+					"action": "manageLineItems",
+					"signature": {
+						"parameters": {
+							"sap-xapp-state": {}
+						},
+						"additionalParameters": "allowed"
+					}
+				},
+				"Vendor-manageLineItems": {
+					"semanticObject": "Vendor",
+					"action": "manageLineItems",
+					"signature": {
+						"parameters": {
+							"sap-xapp-state": {}
+						},
+						"additionalParameters": "allowed"
+					}
+				}
+			}
+		},
+		"dataSources": {
+			"FAP_VENDOR_LINE_ITEMS_SRV": {
+				"uri": "/sap/opu/odata/sap/FAP_VENDOR_LINE_ITEMS_SRV",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "./model/metadata.xml"
+				}
+			}
+		},
+		"resources": "resources.json"
+	},
+	"sap.ui": {
+		"_version": "1.1.0",
+		"technology": "UI5",
+		"icons": {
+			"icon": "sap-icon://Fiori5/F0712",
+			"favIcon": "./resources/sap/ca/ui/themes/base/img/favicon/F0712_Dsp_Vendor_Line_Items.ico"
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": false,
+			"phone": false
+		},
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_bluecrystal"
+		]
+	},
+	"sap.ui5": {
+		"_version": "1.1.0",
+		"rootView": "uladzislau.pralat.fin.ap.lineitems.display.App",
+		"resources": {
+			"js": [],
+			"css": []
+		},
+		"dependencies": {
+			"minUI5Version": "1.65.9",
+			"libs": {
+				"sap.f": {
+					"lazy": false
+				},
+				"sap.m": {
+					"lazy": false
+				},
+				"sap.ui.table": {
+					"lazy": false
+				},
+				"sap.ui.comp": {
+					"lazy": false
+				},
+				"sap.ui.unified": {
+					"lazy": false
+				},
+				"sap.ushell": {
+					"lazy": false
+				},
+				"sap.fin.arp.lib.lineitems": {
+					"lazy": false
+				}
+			},
+			"components": {}
+		},
+		"config": {
+			"fullWidth": true,
+			"serviceUrl": "/sap/opu/odata/sap/FAP_VENDOR_LINE_ITEMS_SRV",
+			"sapFiori2Adaptation": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "uladzislau.pralat.fin.ap.lineitems.display.i18n.i18n"
+				}
+			},
+			"i18nLib": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "sap.fin.arp.lib.lineitems.messagebundle"
+				}
+			},
+			"": {
+				"dataSource": "FAP_VENDOR_LINE_ITEMS_SRV",
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"metadataUrlParams": {
+						"sap-documentation": "heading,quickinfo",
+						"sap-value-list": "none"
+					},
+					"defaultCountMode": "Inline"
+				},
+				"preload": true
+			}
+		},
+		"routing": {
+			"config": {
+				"viewType": "XML",
+				"viewPath": "uladzislau.pralat.fin.ap.lineitems.display.view",
+				"controlId": "app",
+				"controlAggregation": "pages",
+				"routerClass": "sap.m.routing.Router",
+				"async": false
+			},
+			"routes": [{
+				"pattern": "",
+				"name": "fullscreen",
+				"target": "fullscreen"
+			}, {
+				"pattern": "sap-iapp-state={id}",
+				"name": "localstate-old",
+				"target": "fullscreen"
+			}, {
+				"pattern": "{?query}",
+				"name": "localstate-new",
+				"target": "fullscreen"
+			}, {
+				"pattern": "AppCtx={id}",
+				"name": "appctx",
+				"target": "fullscreen"
+			}],
+			"targets": {
+				"fullscreen": {
+					"viewName": "S1",
+					"controlAggregation": "pages"
+				}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		}
+	},
+	"sap.platform.abap": {
+		"_version": "1.1.0",
+		"uri": "/sap/bc/ui5_ui5/sap/fin_ven_lits"
+	},
+	"sap.fiori": {
+		"_version": "1.1.0",
+		"registrationIds": [
+			"F0712"
+		],
+		"archeType": "transactional"
+	},
+	"sap.copilot": {
+		"_version": "1.0.0",
+		"contextAnalysis": {
+			"allowAddingObjectsFromAppScreenToCollection": true
+		},
+		"digitalAssistant": {
+			"intentDefinition": {
+				"copilotIntent": {
+					"uri": "copilot/intent.xml",
+					"dataSources": ["FAP_VENDOR_LINE_ITEMS_SRV"],
+					"i18n": "i18n/copilot/i18n.properties"
+				}
+			}
+		}
+	}
+}
