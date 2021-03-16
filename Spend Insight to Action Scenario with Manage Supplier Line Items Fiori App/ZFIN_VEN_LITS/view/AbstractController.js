@@ -660,7 +660,7 @@ sap.ui.define(
 						 *    by the CustomClearingStatus, in order to be able to restore the current settings (even for currently not
 						 *    visible fields), when the CustomClearingStatus is switched after a back navigation.
 						*/
-						var mVisibleInFilterBar = {}, i;
+						var mVisibleInFilterBar = {}, i;						
 						var aAllFilterItems = this.oAbstractController.oSmartFilterBar.getAllFilterItems();
 						for(i = 0; i < aAllFilterItems.length; i++){
 							// There is no API to get only the fields, which are visible in the FilterBar, thus we have to loop at all items
@@ -669,6 +669,7 @@ sap.ui.define(
 								mVisibleInFilterBar[aAllFilterItems[i].getName()] = true;
 							}
 						}
+
 						var aProperties = oSelectionVariant.getPropertyNames();
 						for(i = 0; i < aProperties.length; i++){
 							// Add hidden fields, which are included in the current selection variant. (Visible fields are already processed in step 1.)
@@ -676,6 +677,8 @@ sap.ui.define(
 								mVisibleInFilterBar[aProperties[i]] = false;
 							}
 						}
+						//Show Posting Key
+						this.oAbstractController.oSmartFilterBar.determineFilterItemByName("PostingKey").setVisibleInFilterBar();
 						// Add the three special fields, if not yet included in the list
 						if (mVisibleInFilterBar.KeyDate === undefined){
 							mVisibleInFilterBar.KeyDate = this.oAbstractController.oSmartFilterBar.determineFilterItemByName("KeyDate").getVisibleInFilterBar();
@@ -1140,6 +1143,16 @@ sap.ui.define(
 						var oPostingDate = this.getPostingDateDefault();
 						oSelectionVariant.removeSelectOption("PostingDate");
 						oSelectionVariant.addSelectOption("PostingDate", "I", oPostingDate.sOption, oPostingDate.sLow, oPostingDate.sHigh);
+						// set posting key
+						if (oSelectionVariant.getSelectOption("PostingKey") !== undefined) {
+							oSelectionVariant.removeSelectOption("PostingKey");
+						}
+						oSelectionVariant.addSelectOption("PostingKey", "I", "EQ", '21');							
+						oSelectionVariant.addSelectOption("PostingKey", "I", "EQ", '22');
+						oSelectionVariant.addSelectOption("PostingKey", "I", "EQ", '24');							
+						oSelectionVariant.addSelectOption("PostingKey", "I", "EQ", '31');							
+						oSelectionVariant.addSelectOption("PostingKey", "I", "EQ", '32');
+						oSelectionVariant.addSelectOption("PostingKey", "I", "EQ", '34');																				
 						break;
 				}
 				return oSelectionVariant;
