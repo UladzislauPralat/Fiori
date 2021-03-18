@@ -1,0 +1,13 @@
+<!--
+
+    Copyright (C) 2009-2018 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<mvc:View 
+xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" 
+	controllerName="com.spinmaster.fin.ap.lineitems.display.App" 
+	displayBlock="true" 
+	height="100%">
+	<App id="app" />
+</mvc:View>

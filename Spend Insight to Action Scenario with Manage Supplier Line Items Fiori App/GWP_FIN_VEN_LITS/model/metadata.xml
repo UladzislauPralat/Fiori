@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (C) 2009-2020 SAP SE or an SAP affiliate company. All rights reserved.
+    Copyright (C) 2009-2018 SAP SE or an SAP affiliate company. All rights reserved.
 
 -->
 <edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
@@ -319,7 +319,7 @@
 				</FunctionImport>
 			</EntityContainer>
 			<Annotations Target="FAP_VENDOR_LINE_ITEMS_SRV.Item" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-				<Annotation Qualifier="uladzislau.pralat.fin.ap.lineitems.display.VendorGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
+				<Annotation Qualifier="com.spinmaster.fin.ap.lineitems.display.VendorGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
 					<Record>
 						<PropertyValue Property="Label" String="Supplier"/>
 						<PropertyValue Property="Data">
@@ -397,7 +397,7 @@
 						</PropertyValue>
 					</Record>
 				</Annotation>
-				<Annotation Qualifier="uladzislau.pralat.fin.ap.lineitems.display.AccountingDocumentGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
+				<Annotation Qualifier="com.spinmaster.fin.ap.lineitems.display.AccountingDocumentGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
 					<Record>
 						<PropertyValue Property="Label" String="Journal Entry"/>
 						<PropertyValue Property="Data">
@@ -559,7 +559,7 @@
 						</PropertyValue>
 					</Record>
 				</Annotation>
-				<Annotation Qualifier="uladzislau.pralat.fin.ap.lineitems.display.ClearingGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
+				<Annotation Qualifier="com.spinmaster.fin.ap.lineitems.display.ClearingGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
 					<Record>
 						<PropertyValue Property="Label" String="Clearing"/>
 						<PropertyValue Property="Data">
@@ -586,7 +586,7 @@
 						</PropertyValue>
 					</Record>
 				</Annotation>
-				<Annotation Qualifier="uladzislau.pralat.fin.ap.lineitems.display.DiscountGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
+				<Annotation Qualifier="com.spinmaster.fin.ap.lineitems.display.DiscountGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
 					<Record>
 						<PropertyValue Property="Label" String="Discount"/>
 						<PropertyValue Property="Data">
@@ -643,7 +643,7 @@
 						</PropertyValue>
 					</Record>
 				</Annotation>
-				<Annotation Qualifier="uladzislau.pralat.fin.ap.lineitems.display.DunningGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
+				<Annotation Qualifier="com.spinmaster.fin.ap.lineitems.display.DunningGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
 					<Record>
 						<PropertyValue Property="Label" String="Dunning"/>
 						<PropertyValue Property="Data">
@@ -667,7 +667,7 @@
 						</PropertyValue>
 					</Record>
 				</Annotation>
-				<Annotation Qualifier="uladzislau.pralat.fin.ap.lineitems.display.PaymentGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
+				<Annotation Qualifier="com.spinmaster.fin.ap.lineitems.display.PaymentGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
 					<Record>
 						<PropertyValue Property="Label" String="Payment"/>
 						<PropertyValue Property="Data">
@@ -769,7 +769,7 @@
 						</PropertyValue>
 					</Record>
 				</Annotation>
-				<Annotation Qualifier="uladzislau.pralat.fin.ap.lineitems.display.RefObjectsGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
+				<Annotation Qualifier="com.spinmaster.fin.ap.lineitems.display.RefObjectsGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
 					<Record>
 						<PropertyValue Property="Label" String="Referenced Objects"/>
 						<PropertyValue Property="Data">
@@ -832,7 +832,7 @@
 						</PropertyValue>
 					</Record>
 				</Annotation>
-				<Annotation Qualifier="uladzislau.pralat.fin.ap.lineitems.display.TaxGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
+				<Annotation Qualifier="com.spinmaster.fin.ap.lineitems.display.TaxGroup" Term="com.sap.vocabularies.UI.v1.FieldGroup">
 					<Record>
 						<PropertyValue Property="Label" String="Tax"/>
 						<PropertyValue Property="Data">

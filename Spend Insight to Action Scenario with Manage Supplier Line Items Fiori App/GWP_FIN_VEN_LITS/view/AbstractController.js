@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (C) 2009-2017 SAP SE or an SAP affiliate company. All rights reserved.
  */
 sap.ui.define(
 	["sap/ui/core/mvc/Controller",
@@ -21,13 +21,12 @@ sap.ui.define(
 	"sap/ui/model/FilterOperator",
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/comp/navpopover/LinkData",
-	"sap/ui/Device",
-	"sap/ui/comp/state/UIState"
+	"sap/ui/Device"
 	//,"sap/ushell/services/Container"
 	],
 	function(Controller, NavigationController, BlockItems, ChangeDocuments, ShareActionSheetController, ExtensionHelper,
 		Formatter, ODataVersionManager, CentralLib, MessageBox, Button, MessageToast, Text, SimpleForm, Title, Filter, FilterOperator, 
-		JSONModel, LinkData, Device, UIState/*, UshellContainer*/) { // UshellContainer not defined yet, waiting for it's AMD migration
+		JSONModel, LinkData, Device/*, UshellContainer*/) { // UshellContainer not defined yet, waiting for it's AMD migration
 		"use strict";
 		/**
 		 * @name sap.fin.arp.lib.lineitems.controller.AbstractController
@@ -206,8 +205,8 @@ sap.ui.define(
 				// creates a unique string from the four key fields
 				// returns 'undefined', if a key field is missing (e.g. for a total line)
 				// In addition, the etag is included (not a key field, but it is needed in ChangeDocuments for optimistic locking).
-				if (typeof oParams.AccountingDocument !== "undefined" && typeof oParams.FiscalYear !== "undefined" && typeof oParams.AccountingDocumentItem !== "undefined" && typeof oParams.CompanyCode !== "undefined" && typeof oParams.etag !== "undefined" && typeof oParams.BusinessPartnerID !== "undefined") {
-					return oParams.AccountingDocument.toString() + "|" + oParams.FiscalYear.toString() + "|" + oParams.AccountingDocumentItem.toString() + "|" + oParams.CompanyCode.toString() + "|" + oParams.etag.toString() + "|" + oParams.BusinessPartnerID.toString() + "|" + oParams.FinancialAccountType.toString();
+				if (typeof oParams.AccountingDocument !== "undefined" && typeof oParams.FiscalYear !== "undefined" && typeof oParams.AccountingDocumentItem !== "undefined" && typeof oParams.CompanyCode !== "undefined" && typeof oParams.etag !== "undefined") {
+					return oParams.AccountingDocument.toString() + "|" + oParams.FiscalYear.toString() + "|" + oParams.AccountingDocumentItem.toString() + "|" + oParams.CompanyCode.toString() + "|" + oParams.etag.toString();
 				}
 			},
 			
@@ -219,10 +218,8 @@ sap.ui.define(
 				oKey.AccountingDocumentItem = aKey[2];
 				oKey.CompanyCode = aKey[3];
 				oKey.etag = aKey[4];
-				oKey.BusinessPartnerID = aKey[5];
-				oKey.FinancialAccountType = aKey[6];
 				
-				if (aKey.length > 7) {
+				if (aKey.length > 5) {
 					MessageBox.show(this.oi18nLib.getText("SEVERE_ERROR"), {
 						icon: MessageBox.Icon.ERROR
 					});
@@ -290,7 +287,7 @@ sap.ui.define(
 								oController.setSmartFilterBarDefaults(sClearingStatus);
 								var bOverwriteFilter = false;
 								var bSetVisibleInFilterBar = true;
-								oController.setSmartFilterBarFilterData(oAppData.selectionVariant, bOverwriteFilter, bSetVisibleInFilterBar, oAppData.valueTexts);
+								oController.setSmartFilterBarFilterData(oAppData.selectionVariant, bOverwriteFilter, bSetVisibleInFilterBar);
 								
 								// restore the visibleInFilterBar properties
 								if(oAppData.customData && oAppData.customData.visibleInFilterBar){
@@ -323,53 +320,10 @@ sap.ui.define(
 				var oSmartLink = this.byId(oParameters.originalId);
 				// Special handling for the "Clearing Document" and "Clearing Date" links.
 				if (oSmartLink && (oSmartLink.data("columnId") === this.sPrefix + ".LinkClearingAccountingDocument" || oSmartLink.data("columnId") === this.sPrefix + ".LinkClearingDate") && oParameters.semanticAttributes.AccountingDocument && oParameters.semanticAttributes.ClearingAccountingDocument) {
-					
-
-
-
-
-
-					var oClearingDocumentKey = {
-						CompanyCode : oParameters.semanticAttributes.CompanyCode,
-						AccountingDocument : oParameters.semanticAttributes.ClearingAccountingDocument,
-						ClearingAccountingDocument : oParameters.semanticAttributes.ClearingAccountingDocument,
-						FiscalYear : oParameters.semanticAttributes.ClearingDocFiscalYear,
-						ClearingDocFiscalYear : oParameters.semanticAttributes.ClearingDocFiscalYear
-					};
-					
-					if (oParameters.semanticAttributesOfSemanticObjects.ClearingAccountingDocument) {
-						
-
-
-
-
-
-
-
-
-						var oClearingAccountingDocumentSemanticAttributes = jQuery.extend(true, {}, oClearingDocumentKey);
-						oParameters.setSemanticAttributes(oClearingAccountingDocumentSemanticAttributes, "ClearingAccountingDocument");
-						if (oParameters.semanticObject === "ClearingAccountingDocument") {
-							oParameters.semanticAttributes = oClearingAccountingDocumentSemanticAttributes;
-						}	
-					}
-					
-					if (oParameters.semanticAttributesOfSemanticObjects.AccountingDocument) {
-						
-
-
-
-
-
-
-
-
-						var oAccountingDocumentSemanticAttributes = jQuery.extend(true, {}, oClearingDocumentKey);
-						oParameters.setSemanticAttributes(oAccountingDocumentSemanticAttributes, "AccountingDocument");
-						if (oParameters.semanticObject === "AccountingDocument") {
-							oParameters.semanticAttributes = oAccountingDocumentSemanticAttributes;
-						}	
-					}
+					// The value of the navigation parameter "AccountingDocument" must be set to the value of the
+					// ClearingAccountingDocument parameter (if available), because we want to hand over the ClearingDocument number in the target links.
+					oParameters.semanticAttributes.AccountingDocument = oParameters.semanticAttributes.ClearingAccountingDocument;
+					oParameters.semanticAttributes.FiscalYear = oParameters.semanticAttributes.ClearingDocFiscalYear;
 				}
 				// take care of all navigation related tasks
 				this.oNavigationController.processBeforeSmartLinkPopoverOpens(oParameters, sSelectionVariant);
@@ -547,21 +501,6 @@ sap.ui.define(
 				this.updateButtonBehavior([]);
 			},
 			
-			/**  
-			* @param {sap.ui.base.Event} oEvent
-			*/
-			onBeforeExport: function(oEvent) {
-				var mExcelSettings = oEvent.getParameter("exportSettings");
-				/** SAPi do not use this.o18nlib here. This has to be a valid Filename and the default 
-				(Items from the Entity set is also not language dependent) SAPi*/
-				mExcelSettings.fileName = this.sOwnSemanticObject + "LineItems";
-				mExcelSettings.dataSource.sizeLimit = 10000;
-                /* SAPi this would allow to limit the maximum number of downloadable items
-                *  not recommended according to MK as customer can always press cancel to abort the download
-                mExcelSettings.dataSource.count = 250000;
-                SAPi*/
-			},
-			
 			onAfterTableVariantSave: function() {
 				this.oNavigationController.storeForBackNavigation(); // store local state for back navigation
 			},
@@ -579,8 +518,7 @@ sap.ui.define(
 				
 				// after a filter variant is loaded, we have to set the values of the custom controls, since the filter bar won't do it
 				// this is done by calling setSmartFilterBarFilterData where the controls are set according to current filter
-				var oUiState = oEvent.getSource().getUiState();
-				var oSelectionVariant = new CentralLib.nav.SelectionVariant(JSON.stringify(oUiState.getSelectionVariant()));
+				var oSelectionVariant = new CentralLib.nav.SelectionVariant(oEvent.getSource().getDataSuiteFormat());
 				var oSelectionVariantDelta = new CentralLib.nav.SelectionVariant();
 				
 				
@@ -660,7 +598,7 @@ sap.ui.define(
 						 *    by the CustomClearingStatus, in order to be able to restore the current settings (even for currently not
 						 *    visible fields), when the CustomClearingStatus is switched after a back navigation.
 						*/
-						var mVisibleInFilterBar = {}, i;						
+						var mVisibleInFilterBar = {}, i;
 						var aAllFilterItems = this.oAbstractController.oSmartFilterBar.getAllFilterItems();
 						for(i = 0; i < aAllFilterItems.length; i++){
 							// There is no API to get only the fields, which are visible in the FilterBar, thus we have to loop at all items
@@ -669,16 +607,15 @@ sap.ui.define(
 								mVisibleInFilterBar[aAllFilterItems[i].getName()] = true;
 							}
 						}
-
-						var aProperties = oSelectionVariant.getPropertyNames();
+						var aProperties = oSelectionVariant.getParameterNames().concat(oSelectionVariant.getSelectOptionsPropertyNames());
 						for(i = 0; i < aProperties.length; i++){
 							// Add hidden fields, which are included in the current selection variant. (Visible fields are already processed in step 1.)
 							if(!this.oAbstractController.oSmartFilterBar.determineFilterItemByName(aProperties[i]).getVisibleInFilterBar()){
 								mVisibleInFilterBar[aProperties[i]] = false;
 							}
 						}
-						//Show Posting Key
-						this.oAbstractController.oSmartFilterBar.determineFilterItemByName("PostingKey").setVisibleInFilterBar();
+						// Posting Key
+						this.oAbstractController.oSmartFilterBar.determineFilterItemByName("PostingKey").setVisibleInFilterBar();						
 						// Add the three special fields, if not yet included in the list
 						if (mVisibleInFilterBar.KeyDate === undefined){
 							mVisibleInFilterBar.KeyDate = this.oAbstractController.oSmartFilterBar.determineFilterItemByName("KeyDate").getVisibleInFilterBar();
@@ -705,6 +642,14 @@ sap.ui.define(
 					oClearingStatusControl: this.byId(this.sPrefix + ".CustomSelectClearingStatus"),
 					oItemTypeControl: this.byId(this.sPrefix + ".CustomMultiComboBoxDueItemCategory"),
 					oAbstractController: this,
+					// Posting Key
+					bPostingKeyBinded: true,
+					getPostingKeyBinded: function() {
+						return this.bPostingKeyBinded;
+					},
+					setPostingKeyBinded: function(bPostingKeyBinded) {
+						this.bPostingKeyBinded= bPostingKeyBinded;
+					},					
 					
 					getClearingStatus: function() {
 						return this.oClearingStatusControl.getSelectedKey();
@@ -765,7 +710,7 @@ sap.ui.define(
 
 
 								this.oAbstractController.oSmartFilterBar.determineFilterItemByName(sKey).setVisibleInFilterBar(mVisibilitySettings[sKey]);
-							}
+							}							
 						}
 					},
 					getItemType: function() {
@@ -841,6 +786,16 @@ sap.ui.define(
 								break;
 							case "A":
 								// No filter necessary
+								// Posting Key
+								if (this.getPostingKeyBinded()) {
+									aFilters.push(new Filter("PostingKey", FilterOperator.EQ, "21"));
+									aFilters.push(new Filter("PostingKey", FilterOperator.EQ, "22"));
+									aFilters.push(new Filter("PostingKey", FilterOperator.EQ, "24"));								
+									aFilters.push(new Filter("PostingKey", FilterOperator.EQ, "31"));
+									aFilters.push(new Filter("PostingKey", FilterOperator.EQ, "32"));								
+									aFilters.push(new Filter("PostingKey", FilterOperator.EQ, "34"));																
+									this.setPostingKeyBinded(false);
+								}
 								break;
 							default:
 								jQuery.sap.log.error("Wrong item status: " + sStatus);
@@ -1041,22 +996,18 @@ sap.ui.define(
 			},
 			
 			onClearingStatusChange: function(oEvent) {
-				var oUiState = this.oSmartFilterBar.getUiState();
-				var oSelectionVariant = new CentralLib.nav.SelectionVariant(JSON.stringify(oUiState.getSelectionVariant()));
+				var oSelectionVariant = new CentralLib.nav.SelectionVariant(this.oSmartFilterBar.getDataSuiteFormat());
 				var sClearingStatus = oEvent.getSource().getSelectedKey();
-				// oSelectionVariant.addParameter("CustomClearingStatus", sClearingStatus);
-				oSelectionVariant.removeSelectOption("CustomClearingStatus");
-				oSelectionVariant.addSelectOption("CustomClearingStatus", "I", "EQ", sClearingStatus);
+				oSelectionVariant.addParameter("CustomClearingStatus", sClearingStatus);
 				oSelectionVariant = this.setDateFilterDefaults(oSelectionVariant, sClearingStatus);
 				var sSelectionVariant = oSelectionVariant.toJSONString();
 				
 				var bOverwriteFilter = true;
 				var bSetVisibleInFilterBar = true;
-				this.setSmartFilterBarFilterData(sSelectionVariant, bOverwriteFilter, bSetVisibleInFilterBar, oUiState.getValueTexts());
+				this.setSmartFilterBarFilterData(sSelectionVariant, bOverwriteFilter, bSetVisibleInFilterBar);
 			},
 				
 			onTypeSelectionChange: function(oEvent, sItemKey) {
-				var oUiState = this.oSmartFilterBar.getUiState();
 				var oSelectionVariant = new CentralLib.nav.SelectionVariant();
 				var aDueItemCategories = oEvent.getSource().getSelectedKeys();
 				oSelectionVariant.addParameter("DueItemCategory", JSON.stringify(aDueItemCategories));
@@ -1066,17 +1017,15 @@ sap.ui.define(
 				
 				var bOverwriteFilter = false;
 				var bSetVisibleInFilterBar = false;
-				this.setSmartFilterBarFilterData(sSelectionVariant, bOverwriteFilter, bSetVisibleInFilterBar, oUiState.getValueTexts());
+				this.setSmartFilterBarFilterData(sSelectionVariant, bOverwriteFilter, bSetVisibleInFilterBar);
 			},
 			
 			navigateToCreateManualPayment: function(oParams) {
 				this.oNavigationController.navigateToCreateManualPayment(oParams);
 			},
 			
-			setSmartFilterBarFilterData: function(sFilterData, bOverwriteFilter, bSetVisibleInFilterBar, oValueTexts) {
+			setSmartFilterBarFilterData: function(sFilterData, bOverwriteFilter, bSetVisibleInFilterBar) {
 				var oSelectionVariant = new CentralLib.nav.SelectionVariant(sFilterData);
-				var oMergeSelectionVariant = new CentralLib.nav.SelectionVariant();
-				var oUiState = new UIState();
 				
 				// set key in "Item Type" custom control
 				var aDueItemCategory = oSelectionVariant.getValue("DueItemCategory");
@@ -1094,25 +1043,10 @@ sap.ui.define(
 					oSelectionVariant.removeSelectOption("DueItemCategory");
 					oSelectionVariant.removeParameter("DueItemCategory");
 					oSelectionVariant.addParameter("DueItemCategory", JSON.stringify(this.oCustomFields.getItemType()));
-					oMergeSelectionVariant.addParameter("DueItemCategory", JSON.stringify(this.oCustomFields.getItemType()));
 					sFilterData = oSelectionVariant.toJSONString();
 				}
 				
-				oUiState.setSelectionVariant(JSON.parse(oSelectionVariant.toJSONString()));
-				if (typeof oValueTexts !== "undefined") {
-					oUiState.setValueTexts(oValueTexts);
-				}
-				
-				this.oSmartFilterBar.setUiState(oUiState, {replace: bOverwriteFilter});
-				
-
-
-
-
-
-
-
-				this.oSmartFilterBar.setDataSuiteFormat(oMergeSelectionVariant.toJSONString(), false);
+				this.oSmartFilterBar.setDataSuiteFormat(sFilterData, bOverwriteFilter);
 				
 				// Set key in "Status" custom control, after(!) the selection variant was set, because the
 				// setDataSuiteFormat(...) does not set only the filter data, but also sets the visibility
@@ -1128,31 +1062,26 @@ sap.ui.define(
 			setDateFilterDefaults: function(oSelectionVariant, sClearingStatus){
 				switch (sClearingStatus) {
 					case "O": // open items should always have a key date set
-						if (oSelectionVariant.getSelectOption("KeyDate") === undefined) {
-							oSelectionVariant.addSelectOption("KeyDate", "I", "EQ", this.getKeyDateDefault().toString());
-						} else {
-							oSelectionVariant.removeSelectOption("KeyDate");
-							oSelectionVariant.addSelectOption("KeyDate", "I", "EQ", this.getKeyDateDefault().toString());
-						}
+						oSelectionVariant.addParameter("KeyDate", this.getKeyDateDefault());
 						break;
-					case "C": // cleared items should not have a key date and clearing date set
-						oSelectionVariant.removeSelectOption("KeyDate");
+					case "C": // cleared items should not have a key date set
+						oSelectionVariant.removeParameter("KeyDate");
+						var oClearingDate = this.getClearingDateDefault();
 						oSelectionVariant.removeSelectOption("ClearingDate");
+						oSelectionVariant.addSelectOption("ClearingDate", "I", oClearingDate.sOption, oClearingDate.sLow, oClearingDate.sHigh);
 						break;
 					case "A": // all items should always have a posting date set
 						var oPostingDate = this.getPostingDateDefault();
 						oSelectionVariant.removeSelectOption("PostingDate");
 						oSelectionVariant.addSelectOption("PostingDate", "I", oPostingDate.sOption, oPostingDate.sLow, oPostingDate.sHigh);
-						// set posting key
-						if (oSelectionVariant.getSelectOption("PostingKey") !== undefined) {
-							oSelectionVariant.removeSelectOption("PostingKey");
-						}
+						// Posting Key
+						oSelectionVariant.removeSelectOption("PostingKey");
 						oSelectionVariant.addSelectOption("PostingKey", "I", "EQ", '21');							
 						oSelectionVariant.addSelectOption("PostingKey", "I", "EQ", '22');
 						oSelectionVariant.addSelectOption("PostingKey", "I", "EQ", '24');							
 						oSelectionVariant.addSelectOption("PostingKey", "I", "EQ", '31');							
 						oSelectionVariant.addSelectOption("PostingKey", "I", "EQ", '32');
-						oSelectionVariant.addSelectOption("PostingKey", "I", "EQ", '34');																				
+						oSelectionVariant.addSelectOption("PostingKey", "I", "EQ", '34');																
 						break;
 				}
 				return oSelectionVariant;
@@ -1177,8 +1106,7 @@ sap.ui.define(
 				
 				var bOverwriteFilter = true;
 				var bSetVisibleInFilterBar = false;
-				var oValueText = {};
-				this.setSmartFilterBarFilterData(oSelectionVariant.toJSONString(), bOverwriteFilter, bSetVisibleInFilterBar, oValueText);
+				this.setSmartFilterBarFilterData(oSelectionVariant.toJSONString(), bOverwriteFilter, bSetVisibleInFilterBar);
 			},
 			
 			getVisibleSelectionsWithDefaults: function() {
@@ -1201,10 +1129,11 @@ sap.ui.define(
 			},
 			
 			getPostingDateDefault: function() {
-				var o12MonthsToDateTo = new Date();
+//				var oToday = new Date();
 //				var oJan1st = new Date("01/01/00");
 //				oJan1st.setYear(oToday.getFullYear());
-				var o12MonthsToDateFrom = new Date(parseInt(o12MonthsToDateTo.getFullYear()) - 1,parseInt(o12MonthsToDateTo.getMonth()),1,0,0,0,0); 
+				var o12MonthsToDateTo = new Date();
+				var o12MonthsToDateFrom = new Date(parseInt(o12MonthsToDateTo.getFullYear()) - 1,parseInt(o12MonthsToDateTo.getMonth()),1,0,0,0,0); 				
 				return {
 					sOption: "BT",
 //					sLow: oJan1st.toJSON(),
@@ -1214,9 +1143,17 @@ sap.ui.define(
 				};
 			},
 			
+			getClearingDateDefault: function() {
+				return {
+					sOption: "EQ",
+					sLow: "",
+					sHigh: null
+				};
+			},
+			
 			getClearingStatusDefault: function() {
-//				return "O";				
-				return "A";
+//				return "O";
+				return "A";				
 			},
 			
 			getItemTypeDefault: function() {
@@ -1231,28 +1168,13 @@ sap.ui.define(
 				for (i = 0; i < aRowIndices.length; i++) {
 					var oContext = this.oTable.getContextByIndex(aRowIndices[i]);
 					if (oContext && oContext.getProperty && oContext.getObject) {
-						if ( this.sOwnSemanticObject === "Customer" ) {
-							sKey = this.createKey({
+						sKey = this.createKey({
 							"AccountingDocument": oContext.getProperty("AccountingDocument"),
 							"AccountingDocumentItem": oContext.getProperty("AccountingDocumentItem"),
 							"FiscalYear": oContext.getProperty("FiscalYear"),
 							"CompanyCode": oContext.getProperty("CompanyCode"),
-							"etag": oContext.getObject().__metadata.etag,
-							"BusinessPartnerID": oContext.getProperty("Customer"),
-							"FinancialAccountType": oContext.getProperty("FinancialAccountType")
-							});
-						} else {
-							sKey = this.createKey({
-							"AccountingDocument": oContext.getProperty("AccountingDocument"),
-							"AccountingDocumentItem": oContext.getProperty("AccountingDocumentItem"),
-							"FiscalYear": oContext.getProperty("FiscalYear"),
-							"CompanyCode": oContext.getProperty("CompanyCode"),
-							"etag": oContext.getObject().__metadata.etag,
-							"BusinessPartnerID": oContext.getProperty("Supplier"),
-							"FinancialAccountType": oContext.getProperty("FinancialAccountType")
-							});
-						}
-						
+							"etag": oContext.getObject().__metadata.etag
+						});
 						if (typeof sKey !== "undefined") { // sKey is only defined properly, if all key fields are provided
 							this.aSelectedKeys.push(sKey);
 						}
@@ -1306,8 +1228,7 @@ sap.ui.define(
 
 			createPopoverContent: function(oEvent, sAddressDataPath) {
 				var oParameters = oEvent.getParameters();
-				var oUiState = this.oSmartFilterBar.getUiState();
-				var sSelectionVariant = JSON.stringify(oUiState.getSelectionVariant());
+				var sSelectionVariant = this.oSmartFilterBar.getDataSuiteFormat();
 				// internally, oParameters.open() is called, which fires the event navigationTargetsObtained
 				this.processBeforeSmartLinkPopoverOpens(oParameters, sSelectionVariant);
 				
@@ -1438,9 +1359,6 @@ sap.ui.define(
 					MessageBox.information(this.oi18nLib.getText("NO_ITEM_CHANGE_LIMIT", this.MAX_NUMBER_OF_ITEMS));
 				}
 			},
-			handleValueHelp: function (oEvent) {
-					jQuery.proxy(this.oChangeDocumentsDialog.handleValueHelp(oEvent), this.oChangeDocumentsDialog);
-			},
 
 			onButtonPressedPaymentBlock: function() {
 				if (this.aSelectedKeys.length <= this.MAX_NUMBER_OF_ITEMS) {
@@ -1460,7 +1378,6 @@ sap.ui.define(
 						this.oBlockDunningDialog = new BlockItems(this.oView, this.BLOCK_ACTION_TYPE_DUN);
 					}
 					this.oBlockDunningDialog.submitChanges(this.oBlockDunningDialog.UNBLOCK);
-					this.oBlockDunningDialog.oController.oTable.clearSelection();					
 				} else {
 					MessageBox.information(this.oi18nLib.getText("NO_ITEM_CHANGE_LIMIT", this.MAX_NUMBER_OF_ITEMS));
 				}
@@ -1472,7 +1389,6 @@ sap.ui.define(
 						this.oBlockPaymentDialog = new BlockItems(this.oView, this.BLOCK_ACTION_TYPE_PMT);
 					}
 					this.oBlockPaymentDialog.submitChanges(this.oBlockPaymentDialog.UNBLOCK);
-					this.oBlockPaymentDialog.oController.oTable.clearSelection();					
 				} else {
 					MessageBox.information(this.oi18nLib.getText("NO_ITEM_CHANGE_LIMIT", this.MAX_NUMBER_OF_ITEMS));
 				}

@@ -1,12 +1,12 @@
 /*
- * Copyright (C) 2009-2020 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (C) 2009-2018 SAP SE or an SAP affiliate company. All rights reserved.
  */
 // define a root UIComponent which exposes the main view
 sap.ui.define(["sap/ui/core/UIComponent","sap/ui/Device","sap/fin/arp/lib/lineitems/util/ErrorHandler"],
 	function(UIComponent,Device,ErrorHandler){
 		"use strict";
 	
-		return UIComponent.extend("uladzislau.pralat.fin.ap.lineitems.display.Component", {
+		return UIComponent.extend("com.spinmaster.fin.ap.lineitems.display.Component", {
 			metadata : {
 				manifest: "json"
 			},

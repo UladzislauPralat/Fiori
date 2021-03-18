@@ -1,0 +1,6 @@
+{
+  "deploy": {
+    "destination": "SB1",
+    "name": "Z_FIN_VEN_LITS"
+  }
+}

@@ -1,13 +1,12 @@
 {
 	"_version": "1.6.0",
-
 	"sap.app": {
 		"_version": "1.2.0",
-		"id": "uladzislau.pralat.fin.ap.lineitems.display",
+		"id": "com.spinmaster.fin.ap.lineitems.display",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"applicationVersion": {
-			"version": "7.0.8"
+			"version": "5.0.5"
 		},
 		"title": "{{FULLSCREEN_TITLE}}",
 		"ach": "FI-FIO-AP",
@@ -66,35 +65,24 @@
 	},
 	"sap.ui5": {
 		"_version": "1.1.0",
-		"rootView": "uladzislau.pralat.fin.ap.lineitems.display.App",
+		"rootView": "com.spinmaster.fin.ap.lineitems.display.App",
 		"resources": {
-			"js": [],
-			"css": []
+			"css": [
+				{
+					"uri": "css/styles.css"
+				}
+			]
 		},
 		"dependencies": {
-			"minUI5Version": "1.65.9",
+			"minUI5Version": "1.48.4",
 			"libs": {
-				"sap.f": {
-					"lazy": false
-				},
-				"sap.m": {
-					"lazy": false
-				},
-				"sap.ui.table": {
-					"lazy": false
-				},
-				"sap.ui.comp": {
-					"lazy": false
-				},
-				"sap.ui.unified": {
-					"lazy": false
-				},
-				"sap.ushell": {
-					"lazy": false
-				},
-				"sap.fin.arp.lib.lineitems": {
-					"lazy": false
-				}
+				"sap.f": {},
+				"sap.m": {},
+				"sap.ui.table": {},
+				"sap.ui.comp": {},
+				"sap.ui.unified": {},
+				"sap.ushell": {},
+				"sap.fin.arp.lib.lineitems": {}
 			},
 			"components": {}
 		},
@@ -107,7 +95,7 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "uladzislau.pralat.fin.ap.lineitems.display.i18n.i18n"
+					"bundleName": "com.spinmaster.fin.ap.lineitems.display.i18n.i18n"
 				}
 			},
 			"i18nLib": {
@@ -125,36 +113,39 @@
 						"sap-value-list": "none"
 					},
 					"defaultCountMode": "Inline"
-				},
-				"preload": true
+				}
 			}
 		},
 		"routing": {
 			"config": {
 				"viewType": "XML",
-				"viewPath": "uladzislau.pralat.fin.ap.lineitems.display.view",
+				"viewPath": "com.spinmaster.fin.ap.lineitems.display.view",
 				"controlId": "app",
 				"controlAggregation": "pages",
-				"routerClass": "sap.m.routing.Router",
-				"async": false
+				"routerClass": "sap.m.routing.Router"
 			},
-			"routes": [{
-				"pattern": "",
-				"name": "fullscreen",
-				"target": "fullscreen"
-			}, {
-				"pattern": "sap-iapp-state={id}",
-				"name": "localstate-old",
-				"target": "fullscreen"
-			}, {
-				"pattern": "{?query}",
-				"name": "localstate-new",
-				"target": "fullscreen"
-			}, {
-				"pattern": "AppCtx={id}",
-				"name": "appctx",
-				"target": "fullscreen"
-			}],
+			"routes": [
+				{
+					"pattern": "",
+					"name": "fullscreen",
+					"target": "fullscreen"
+				},
+				{
+					"pattern": "sap-iapp-state={id}",
+					"name": "localstate-old",
+					"target": "fullscreen"
+				},
+				{
+					"pattern": "{?query}",
+					"name": "localstate-new",
+					"target": "fullscreen"
+				},
+				{
+					"pattern": "AppCtx={id}",
+					"name": "appctx",
+					"target": "fullscreen"
+				}
+			],
 			"targets": {
 				"fullscreen": {
 					"viewName": "S1",
@@ -169,7 +160,7 @@
 	},
 	"sap.platform.abap": {
 		"_version": "1.1.0",
-		"uri": "/sap/bc/ui5_ui5/sap/fin_ven_lits"
+		"uri": "/sap/bc/ui5_ui5/sap/z_fin_ven_lits"
 	},
 	"sap.fiori": {
 		"_version": "1.1.0",
@@ -181,16 +172,7 @@
 	"sap.copilot": {
 		"_version": "1.0.0",
 		"contextAnalysis": {
-			"allowAddingObjectsFromAppScreenToCollection": true
-		},
-		"digitalAssistant": {
-			"intentDefinition": {
-				"copilotIntent": {
-					"uri": "copilot/intent.xml",
-					"dataSources": ["FAP_VENDOR_LINE_ITEMS_SRV"],
-					"i18n": "i18n/copilot/i18n.properties"
-				}
-			}
+			"allowAddingObjectsFromAppScreenToCollection": false
 		}
 	}
 }

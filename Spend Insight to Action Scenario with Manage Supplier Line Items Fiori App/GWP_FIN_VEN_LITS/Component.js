@@ -1,9 +1,9 @@
 /*
- * Copyright (C) 2009-2020 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (C) 2009-2018 SAP SE or an SAP affiliate company. All rights reserved.
  */
 sap.ui.define(["sap/ui/core/UIComponent", "sap/ui/Device", "sap/fin/arp/lib/lineitems/util/ErrorHandler"], function(U, D, E) {
 	"use strict";
-	return U.extend("uladzislau.pralat.fin.ap.lineitems.display.Component", {
+	return U.extend("com.spinmaster.fin.ap.lineitems.display.Component", {
 		metadata: {
 			manifest: "json"
 		},

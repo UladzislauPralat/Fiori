@@ -1,15 +1,15 @@
 /*
- * Copyright (C) 2009-2020 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (C) 2009-2018 SAP SE or an SAP affiliate company. All rights reserved.
  */
-sap.ui.define(["uladzislau/pralat/fin/ap/lineitems/display/view/AbstractController", "sap/fin/central/lib/nav/SelectionVariant", "sap/m/MessageBox",
+sap.ui.define(["com/spinmaster/fin/ap/lineitems/display/view/AbstractController", "sap/fin/central/lib/nav/SelectionVariant", "sap/m/MessageBox",
 	"sap/ui/core/BusyIndicator"
 ], function(A, S, M, B) {
 	"use strict";
-	var a = sap.fin.arp.lib.lineitems.controller.AbstractController.extend("uladzislau.pralat.fin.ap.lineitems.display.view.S1", {
+	var a = sap.fin.arp.lib.lineitems.controller.AbstractController.extend("com.spinmaster.fin.ap.lineitems.display.view.S1", {
 		constructor: function() {
 			A.apply(this, arguments);
 			this.sLocalContainerKey = "fin.ap.lineitems";
-			this.sPrefix = "uladzislau.pralat.fin.ap.lineitems.display";
+			this.sPrefix = "com.spinmaster.fin.ap.lineitems.display";
 			this.sIconPath = "sap-icon://Fiori5/F0712";
 			this.sSchemaNamespace = "FAP_VENDOR_LINE_ITEMS_SRV";
 			this.sOwnSemanticObject = "Supplier";
@@ -28,10 +28,6 @@ sap.ui.define(["uladzislau/pralat/fin/ap/lineitems/display/view/AbstractControll
 			this.initDeferred.done(function() {
 				A.prototype.onInitSmartFilterBar.apply(c, arguments);
 				c.checkForNavigation(jQuery.proxy(c.renameNavigationParameters, c));
-//				this.setSmartFilterBarDefaults("A");
-//				this.oCustomFields.setClearingStatus("A", true);
-//				this.oCustomFields.onClearingStatusChange();
-				
 			});
 		},
 		renameNavigationParameters: function(f) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2020 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (C) 2009-2018 SAP SE or an SAP affiliate company. All rights reserved.
  */
 sap.ui.define(
 	["sap/fin/arp/lib/lineitems/controller/AbstractController",
@@ -10,15 +10,15 @@ sap.ui.define(
 		"use strict";
 
 		var S1Controller = sap.fin.arp.lib.lineitems.controller.AbstractController.extend(
-			"uladzislau.pralat.fin.ap.lineitems.display.view.S1", {
+			"com.spinmaster.fin.ap.lineitems.display.view.S1", {
 			/**
-			 * @memberOf uladzislau.pralat.fin.ap.lineitems.display.view.S1.controller
+			 * @memberOf com.spinmaster.fin.ap.lineitems.display.view.S1.controller
 			 */
 
 			constructor: function() {
 				AbstractController.apply(this, arguments);
 				this.sLocalContainerKey = "fin.ap.lineitems";
-				this.sPrefix = "uladzislau.pralat.fin.ap.lineitems.display";
+				this.sPrefix = "com.spinmaster.fin.ap.lineitems.display";
 				this.sIconPath = "sap-icon://Fiori5/F0712";
 				this.sSchemaNamespace = "FAP_VENDOR_LINE_ITEMS_SRV";
 				this.sOwnSemanticObject = "Supplier";
